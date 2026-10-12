@@ -1,0 +1,409 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #ddf2fd;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ddf2fd;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+#navbar {
+  position: relative;
+  padding: 16px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #427d9d;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: white;
+}
+
+.tombol {
+  color: white;
+  display: flex;
+  gap: 20px;
+}
+
+.tombol a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.tombol a:hover,
+.tombol a.aktif {
+  text-decoration: underline;
+}
+
+.logo {
+  color: white;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.page {
+  min-height: calc(100dvh - 62px);
+  padding: 70px 8%;
+  background-color: #ddf2fd;
+  scroll-margin-top: 62px;
+}
+
+#home {
+  display: flex;
+  align-items: center;
+}
+
+.home {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-areas:
+    "text image"
+    "btn image";
+  gap: 24px 70px;
+  align-items: center;
+}
+
+.home-text {
+  grid-area: text;
+}
+
+.home-btn {
+  grid-area: btn;
+  justify-self: start;
+  align-self: start;
+}
+
+.home-text h1 {
+  margin: 0;
+  max-width: 1250px;
+  color: #164863;
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.15;
+  letter-spacing: -1px;
+}
+
+.home-desc {
+  max-width: 580px;
+  margin: 18px 0 0;
+  color: #365d70;
+  font-size: clamp(16px, 1.8vw, 20px);
+  line-height: 1.6;
+}
+
+.btn {
+  display: inline-block;
+  background-color: #164863;
+  color: white;
+  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.btn:hover {
+  background-color: #0f3347;
+}
+
+.home-image {
+  grid-area: image;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.home-image img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.section-head {
+  max-width: 1150px;
+  margin: 0 auto 40px;
+}
+
+.section-head h2 {
+  margin: 0 0 8px;
+  color: #164863;
+  font-size: 36px;
+}
+
+.section-head p {
+  margin: 0;
+  color: #365d70;
+  font-size: 18px;
+}
+
+.cards {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.card {
+  position: relative;
+  min-height: 380px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(22, 72, 99, 0.18);
+}
+
+.card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  position: relative;
+  z-index: 1;
+  min-height: 380px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(180, 214, 232, 0.45);
+}
+
+.card h3 {
+  margin: 0;
+  color: #3d2c8c;
+  font-size: 28px;
+}
+
+.card-bottom p {
+  margin: 0 0 6px;
+  color: white;
+  font-size: 14px;
+}
+
+.btn-pilih {
+  margin-top: 12px;
+  background-color: #3d2c8c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-pilih:hover {
+  background-color: #2b1f66;
+}
+
+.tiket-box {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+
+.tiket-info,
+.tiket-form {
+  background-color: white;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(22, 72, 99, 0.12);
+}
+
+.tiket-info h3 {
+  margin: 0 0 12px;
+  color: #164863;
+}
+
+.tiket-info p {
+  margin: 0 0 10px;
+  color: #365d70;
+  line-height: 1.6;
+}
+
+.tiket-form label {
+  display: block;
+  margin: 0 0 8px;
+  color: #164863;
+  font-weight: bold;
+}
+
+.tiket-form select,
+.tiket-form input {
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #9bb8c7;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.form-buttons button {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+#btn-hitung {
+  background-color: #164863;
+}
+
+#btn-hitung:hover {
+  background-color: #0f3347;
+}
+
+#btn-beli {
+  background-color: #3d2c8c;
+}
+
+#btn-beli:hover {
+  background-color: #2b1f66;
+}
+
+#hasil {
+  margin-top: 18px;
+  min-height: 48px;
+  color: #164863;
+  line-height: 1.7;
+}
+
+#hasil.error {
+  color: #a11d1d;
+}
+
+#hasil.sukses {
+  color: #146c43;
+}
+
+@media (max-width: 900px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .tombol {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 6% 16px;
+    background-color: #3a6e8a;
+    box-shadow: 0 10px 18px rgba(22, 72, 99, 0.2);
+  }
+
+  nav.buka .tombol {
+    display: flex;
+  }
+
+  .tombol a {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  #navbar,
+  .page {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .page {
+    padding-top: 36px;
+    padding-bottom: 40px;
+  }
+
+  .home,
+  .cards,
+  .tiket-box {
+    grid-template-columns: 1fr;
+  }
+
+  .home {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "text"
+      "image"
+      "btn";
+    gap: 22px;
+  }
+
+  .home-text h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  .home-desc {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 14px 0 0;
+  }
+
+  .home-image img {
+    height: 220px;
+  }
+
+  .section-head {
+    margin-bottom: 24px;
+  }
+
+  .section-head h2 {
+    font-size: 26px;
+  }
+
+  .section-head p {
+    font-size: 15px;
+  }
+
+  .card,
+  .card-body {
+    min-height: 300px;
+  }
+
+  .card h3 {
+    font-size: 24px;
+  }
+}

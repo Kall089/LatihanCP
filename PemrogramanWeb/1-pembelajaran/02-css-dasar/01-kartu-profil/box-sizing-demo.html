@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Box Sizing</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 32px 16px;
+        background: #f1f5f9;
+        color: #172033;
+        font-family: Arial, sans-serif;
+      }
+
+      main {
+        width: min(100%, 760px);
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin-top: 0;
+      }
+
+      .contoh {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        margin: 32px 0;
+      }
+
+      .kotak {
+        width: 200px;
+        padding: 20px;
+        border: 10px solid #2563eb;
+        background: #bfdbfe;
+      }
+
+      .content-box {
+        box-sizing: content-box;
+      }
+
+      .border-box {
+        box-sizing: border-box;
+      }
+
+      .ukuran {
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 4px;
+        background: #e2e8f0;
+      }
+
+      .wadah {
+        width: min(100%, 320px);
+        margin-top: 16px;
+        border: 3px dashed #64748b;
+        background: white;
+      }
+
+      .lebar-penuh {
+        width: 100%;
+        padding: 20px;
+        border: 10px solid #dc2626;
+        background: #fecaca;
+      }
+
+      .aman {
+        box-sizing: border-box;
+        margin-top: 24px;
+        border-color: #16a34a;
+        background: #bbf7d0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Perbedaan <code>box-sizing</code></h1>
+      <p>
+        Kedua kotak berikut memiliki <code>width: 200px</code>,
+        <code>padding: 20px</code>, dan <code>border: 10px</code>.
+      </p>
+
+      <div class="contoh">
+        <section>
+          <p class="ukuran">Lebar akhir: 260px</p>
+          <div class="kotak content-box">
+            <strong>content-box</strong>
+            <p>Width hanya mengukur bagian isi.</p>
+          </div>
+        </section>
+
+        <section>
+          <p class="ukuran">Lebar akhir: 200px</p>
+          <div class="kotak border-box">
+            <strong>border-box</strong>
+            <p>Width sudah mencakup padding dan border.</p>
+          </div>
+        </section>
+      </div>
+
+      <h2>Contoh saat memakai <code>width: 100%</code></h2>
+      <p>Garis putus-putus menunjukkan batas wadah.</p>
+
+      <div class="wadah">
+        <div class="lebar-penuh">
+          <strong>content-box</strong><br />
+          Kotak ini keluar dari wadah.
+        </div>
+      </div>
+
+      <div class="wadah">
+        <div class="lebar-penuh aman">
+          <strong>border-box</strong><br />
+          Kotak ini tetap pas di dalam wadah.
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

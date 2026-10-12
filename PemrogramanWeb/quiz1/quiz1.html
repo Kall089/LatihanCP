@@ -1,0 +1,204 @@
+<!doctype html>
+
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Quiz 1 Pemrograman Web Muhammad Haikal Muzhoffar (140810250082) Kelas C
+    </title>
+    <link rel="stylesheet" href="quiz1.css" />
+    <script src="quiz1.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="judul">
+        <h2>PROGRAM HITUNG JUMLAH PENGAMBILAN SKS DAN IP</h2>
+      </div>
+    </header>
+    <section id="section1">
+      <div
+        class="tabel-matkul"
+        tabindex="0"
+        role="region"
+        aria-label="Tabel mata kuliah"
+      >
+        <table class="isi-tabel-matkul">
+          <tr>
+            <th>No</th>
+            <th>Sandi</th>
+            <th>Mata Kuliah</th>
+            <th>SKS</th>
+            <th>Nilai Huruf</th>
+          </tr>
+
+          <tr>
+            <td class="tengah">1.</td>
+            <td>D10K. 0400305</td>
+            <td>SISTEM DATABASE II</td>
+            <td class="tengah">3</td>
+            <td>
+              <select
+                name="nilai_huruf"
+                class="input-nilai"
+                form="form-mhs"
+                aria-label="Nilai Sistem Database II"
+                aria-describedby="pesan-error"
+                required
+              >
+                <option value="">Pilih</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="tengah">2.</td>
+            <td>D10K. 0400306</td>
+            <td>DECISSION SUPPORT SYSTEM</td>
+            <td class="tengah">3</td>
+            <td>
+              <select
+                name="nilai_huruf"
+                class="input-nilai"
+                form="form-mhs"
+                aria-label="Nilai Decision Support System"
+                aria-describedby="pesan-error"
+                required
+              >
+                <option value="">Pilih</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="tengah">3.</td>
+            <td>D10K. 0400307</td>
+            <td>PEMROGRAMAN BERORITENTASI OBJEK</td>
+            <td class="tengah">3</td>
+            <td>
+              <select
+                name="nilai_huruf"
+                class="input-nilai"
+                form="form-mhs"
+                aria-label="Nilai Pemrograman Berorientasi Objek"
+                aria-describedby="pesan-error"
+                required
+              >
+                <option value="">Pilih</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="tengah">4.</td>
+            <td>D10K. 0400308</td>
+            <td>METODE NUMERIK</td>
+            <td class="tengah">2</td>
+            <td>
+              <select
+                name="nilai_huruf"
+                class="input-nilai"
+                form="form-mhs"
+                aria-label="Nilai Metode Numerik"
+                aria-describedby="pesan-error"
+                required
+              >
+                <option value="">Pilih</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td class="tengah">5.</td>
+            <td>D10K. 0400309</td>
+            <td>ALJABAR LINIER</td>
+            <td class="tengah">3</td>
+            <td>
+              <select
+                name="nilai_huruf"
+                class="input-nilai"
+                form="form-mhs"
+                aria-label="Nilai Aljabar Linier"
+                aria-describedby="pesan-error"
+                required
+              >
+                <option value="">Pilih</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <form class="input-mhs" id="form-mhs" novalidate>
+        <p class="form-pengantar">Lengkapi data kamu</p>
+        <h2>Data Mahasiswa</h2>
+
+        <div class="baris-input">
+          <input
+            type="text"
+            id="nama-mhs"
+            name="nama_mhs"
+            placeholder="Nama Mahasiswa"
+            aria-label="Nama Mahasiswa"
+            required
+          />
+        </div>
+
+        <div class="baris-input">
+          <input
+            type="text"
+            id="npm"
+            name="npm"
+            placeholder="NPM"
+            aria-label="NPM"
+            inputmode="numeric"
+            required
+          />
+        </div>
+
+        <div class="baris-input">
+          <input
+            type="text"
+            id="program-studi"
+            name="program_studi"
+            placeholder="Program Studi"
+            aria-label="Program Studi"
+            required
+          />
+        </div>
+
+        <button type="submit">Proses</button>
+
+        <p id="pesan-error" role="alert"></p>
+        <div id="hasil" role="status" aria-live="polite" hidden>
+          <p>JUMLAH MATA KULIAH: <strong id="total-matkul"></strong></p>
+
+          <p>Jumlah Pengambilan SKS: <strong id="total-sks"></strong></p>
+          <p>IP: <strong id="nilai-ip"></strong></p>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>

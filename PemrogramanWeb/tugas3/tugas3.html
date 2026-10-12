@@ -1,0 +1,178 @@
+<!doctype html>
+
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Destinasi Wisata</title>
+    <link rel="stylesheet" href="tugas3.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div id="navbar">
+        <div class="logo">DESTINASI WISATA</div>
+        <button type="button" class="menu-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="tombol">
+          <a href="#home" data-scroll="home">Home</a>
+          <a href="#info" data-scroll="info">Info</a>
+          <a href="#tiket" data-scroll="tiket">Tiket</a>
+          <a href="profile.html">Creator</a>
+        </div>
+      </div>
+    </nav>
+
+    <section id="home" class="page">
+      <div class="home">
+        <div class="home-text">
+          <h1>
+            MARI MENJELAJAHI TEMPAT BARU, <br />
+            CARI WISATA DI JELAJAH WISATA
+          </h1>
+          <p class="home-desc">
+            Temukan informasi destinasi wisata, harga tiket, dan rekomendasi
+            tempat wisata untuk perjalananmu
+          </p>
+        </div>
+        <div class="home-image">
+          <img src="image/ampat.png" alt="Pemandangan destinasi wisata" />
+        </div>
+        <a href="#info" class="btn home-btn" data-scroll="info"
+          >Lihat Destinasi</a
+        >
+      </div>
+    </section>
+
+    <section id="info" class="page">
+      <div class="section-head">
+        <h2>Informasi Destinasi</h2>
+        <p>Pilih destinasi untuk melihat informasi singkat dan harga tiket.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card" data-destinasi="rajaampat">
+          <img src="image/ampat.png" alt="Raja Ampat" />
+          <div class="card-body">
+            <h3>Raja Ampat</h3>
+            <div class="card-bottom">
+              <p>Alamat: Papua Barat Daya</p>
+              <p>CONTACT: 081234567890</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-destinasi="bromo">
+          <img src="image/bromo.png" alt="Gunung Bromo" />
+          <div class="card-body">
+            <h3>Gunung Bromo</h3>
+            <div class="card-bottom">
+              <p>Alamat: Probolinggo, Jawa Timur</p>
+              <p>CONTACT: 081298765432</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-destinasi="borobudur">
+          <img src="image/borobudur.png" alt="Candi Borobudur" />
+          <div class="card-body">
+            <h3>Candi Borobudur</h3>
+            <div class="card-bottom">
+              <p>Alamat: Magelang, Jawa Tengah</p>
+              <p>CONTACT: 081376543210</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-destinasi="dufan">
+          <img src="image/dufan.png" alt="Dufan" />
+          <div class="card-body">
+            <h3>Dufan</h3>
+            <div class="card-bottom">
+              <p>Alamat: Ancol, Jakarta Utara</p>
+              <p>CONTACT: 081455512345</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-destinasi="toba">
+          <img src="image/toba.png" alt="Danau Toba" />
+          <div class="card-body">
+            <h3>Danau Toba</h3>
+            <div class="card-bottom">
+              <p>Alamat: Sumatera Utara</p>
+              <p>CONTACT: 081567890123</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-destinasi="safari">
+          <img src="image/safari.png" alt="Taman Safari" />
+          <div class="card-body">
+            <h3>Taman Safari</h3>
+            <div class="card-bottom">
+              <p>Alamat: Cisarua, Bogor</p>
+              <p>CONTACT: 081678901234</p>
+              <button type="button" class="btn-pilih">LIHAT TIKET</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="tiket" class="page">
+      <div class="section-head">
+        <h2>Pembelian Tiket</h2>
+        <p>Isi data di bawah untuk menghitung total harga tiket.</p>
+      </div>
+
+      <div class="tiket-box">
+        <div class="tiket-info" id="ringkasan">
+          <h3>Pilih destinasi dulu</h3>
+          <p>
+            Klik salah satu destinasi di halaman Info, atau pilih dari menu di
+            samping.
+          </p>
+        </div>
+
+        <form class="tiket-form" id="form-tiket">
+          <label for="pilihan">Pilihan destinasi</label>
+          <select id="pilihan">
+            <option value="">-- Pilih destinasi --</option>
+            <option value="rajaampat">Raja Ampat</option>
+            <option value="bromo">Gunung Bromo</option>
+            <option value="borobudur">Candi Borobudur</option>
+            <option value="dufan">Dufan</option>
+            <option value="toba">Danau Toba</option>
+            <option value="safari">Taman Safari</option>
+          </select>
+
+          <label for="jumlah">Jumlah orang</label>
+          <input
+            id="jumlah"
+            type="number"
+            min="1"
+            placeholder="Masukkan jumlah pengunjung"
+          />
+
+          <div class="form-buttons">
+            <button type="button" id="btn-hitung">Hitung Total</button>
+            <button type="button" id="btn-beli">Beli Tiket</button>
+          </div>
+
+          <div id="hasil"></div>
+        </form>
+      </div>
+    </section>
+
+    <script src="tugas3.js"></script>
+  </body>
+</html>

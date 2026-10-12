@@ -1,0 +1,68 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "ui/*": [
+        "./src/ui/*"
+      ],
+      "features/*": [
+        "./src/features/*"
+      ],
+      "hooks/*": [
+        "./src/hooks/*"
+      ],
+      "services/*": [
+        "./src/services/*"
+      ],
+      "utils/*": [
+        "./src/utils/*"
+      ],
+      "styles/*": [
+        "./src/styles/*"
+      ],
+      "context/*": [
+        "./src/context/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "starter",
+    "**/App-v*.tsx",
+    "**/*-memo.tsx",
+    "**/src-no-context/**",
+    "**/starter.ts"
+  ]
+}

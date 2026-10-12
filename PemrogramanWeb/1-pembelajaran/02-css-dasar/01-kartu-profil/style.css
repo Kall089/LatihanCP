@@ -1,0 +1,76 @@
+/* TODO 1: Terapkan box-sizing border-box untuk semua elemen. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  /* TODO 2: Gunakan flex untuk menempatkan kartu tepat di tengah. */
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #172033;
+  /* TODO 3: Atur font, warna teks, dan warna latar halaman. */
+  background-color: aliceblue;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20px;
+}
+
+.profile-card {
+  padding: 1rem;
+  width: min(90%, 420px);
+  /* TODO 4: Tambahkan background, padding, border, border-radius, dan shadow. */
+  background-color: brown;
+  /* TODO 5: Ratakan teks ke tengah. */
+  border-radius: 1.25rem;
+  text-align: center;
+  border: 3px solid #dbe2ef;
+  box-shadow: 0 1rem 2.5rem rgb(30 64 175 / 40%);
+}
+
+.avatar {
+  margin-top: 20px;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.eyebrow {
+  /* TODO 7: Buat teks kecil, tebal, berwarna aksen, dan uppercase. */
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+}
+
+.nama {
+  font-size: 25px;
+}
+
+.description {
+  line-height: 1.3;
+  /* TODO 8: Beri jarak bawah sebelum tombol. */
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-block;
+  text-decoration: none;
+  /* TODO 9: Bentuk tombol menggunakan padding, warna, dan border-radius. */
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 0.625rem;
+  padding: 0.75rem 1rem;
+}
+
+/* TODO 10: Tambahkan selector :hover dan :focus-visible untuk tombol. */
+.button:hover {
+  background-color: aqua;
+}
+
+.button:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
+}

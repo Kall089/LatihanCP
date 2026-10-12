@@ -1,0 +1,23 @@
+/* Tahap 2 — CSS external Profil Saya
+   Tautkan dari index.html: <link rel="stylesheet" href="css/style.css">
+*/
+
+/* TODO 1: reset — * { box-sizing: border-box; } body { margin: 0; } */
+
+/* TODO 2: tipografi — font-family di body, line-height, warna teks, hierarki h1/h2 */
+
+/* TODO 3: header + nav — display:flex, space-between / gap, tautan tanpa underline */
+
+/* TODO 4: kartu identitas — padding, border-radius, box-shadow; foto bulat object-fit */
+
+/* TODO 5: flexbox tambahan — daftar hobi sebagai deret (wrap) ATAU nav */
+
+/* TODO 6: tabel — border-collapse, padding sel, thead latar beda */
+
+/* TODO 7: form — label block, input lebar, tombol dengan :hover dan :focus-visible */
+
+/* TODO 8: responsif ≤768px
+   @media (max-width: 768px) { ... }
+   atau mobile-first: gaya dasar HP, lalu @media (min-width: 768px) { ... }
+   Nav boleh flex-direction: column; cegah overflow horizontal.
+*/

@@ -1,0 +1,124 @@
+{
+  "compiler": [
+    "/usr/bin/g++"
+  ],
+  "sanitizers": false,
+  "days": 4,
+  "exercises": 12,
+  "passed_cases": 313,
+  "total_cases": 313,
+  "failed_exercises": 0,
+  "results": [
+    {
+      "day": 267,
+      "exercise": 1,
+      "title": "Konvoi Logistik Festival",
+      "passed": 25,
+      "total": 25,
+      "failures": [],
+      "seconds": 1.175
+    },
+    {
+      "day": 267,
+      "exercise": 2,
+      "title": "Posko di Jalan Panjang",
+      "passed": 25,
+      "total": 25,
+      "failures": [],
+      "seconds": 1.565
+    },
+    {
+      "day": 267,
+      "exercise": 3,
+      "title": "Bus Tambahan, Anggaran Tambahan",
+      "passed": 25,
+      "total": 25,
+      "failures": [],
+      "seconds": 1.909
+    },
+    {
+      "day": 268,
+      "exercise": 1,
+      "title": "Tarif Angkot di Hari Festival",
+      "passed": 26,
+      "total": 26,
+      "failures": [],
+      "warnings": "/Users/haikalmuzhoffar/KULIAH/ComProgLearning/CP/Day-268 (Convex Hull Trick - Kasus Monoton)/solusi/solution_1.cpp:18:10: warning: unused variable 'INF' [-Wunused-const-variable]\n   18 | const ll INF=4000000000000000000LL;\n      |          ^~~\n1 warning generated.\n",
+      "seconds": 0.795
+    },
+    {
+      "day": 268,
+      "exercise": 2,
+      "title": "Katak dan Batu Berkabut",
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "warnings": "/Users/haikalmuzhoffar/KULIAH/ComProgLearning/CP/Day-268 (Convex Hull Trick - Kasus Monoton)/solusi/solution_2.cpp:18:10: warning: unused variable 'INF' [-Wunused-const-variable]\n   18 | const ll INF=4000000000000000000LL;\n      |          ^~~\n1 warning generated.\n",
+      "seconds": 1.061
+    },
+    {
+      "day": 268,
+      "exercise": 3,
+      "title": "Relai Pengiriman di Jalur Pantai",
+      "passed": 26,
+      "total": 26,
+      "failures": [],
+      "warnings": "/Users/haikalmuzhoffar/KULIAH/ComProgLearning/CP/Day-268 (Convex Hull Trick - Kasus Monoton)/solusi/solution_3.cpp:18:10: warning: unused variable 'INF' [-Wunused-const-variable]\n   18 | const ll INF=4000000000000000000LL;\n      |          ^~~\n1 warning generated.\n",
+      "seconds": 0.991
+    },
+    {
+      "day": 269,
+      "exercise": 1,
+      "title": "Papan Tarif yang Terus Berubah",
+      "passed": 26,
+      "total": 26,
+      "failures": [],
+      "seconds": 1.019
+    },
+    {
+      "day": 269,
+      "exercise": 2,
+      "title": "Katak di Pegunungan Acak",
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "seconds": 1.214
+    },
+    {
+      "day": 269,
+      "exercise": 3,
+      "title": "Promo Hanya untuk Zona Tertentu",
+      "passed": 26,
+      "total": 26,
+      "failures": [],
+      "seconds": 1.078
+    },
+    {
+      "day": 270,
+      "exercise": 1,
+      "title": "Peti yang Hanya Bisa Digabung dari Samping",
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "seconds": 1.122
+    },
+    {
+      "day": 270,
+      "exercise": 2,
+      "title": "Memotong Pita Panggung",
+      "passed": 26,
+      "total": 26,
+      "failures": [],
+      "seconds": 1.141
+    },
+    {
+      "day": 270,
+      "exercise": 3,
+      "title": "Lampion dalam Lingkaran",
+      "passed": 27,
+      "total": 27,
+      "failures": [],
+      "seconds": 0.938
+    }
+  ]
+}

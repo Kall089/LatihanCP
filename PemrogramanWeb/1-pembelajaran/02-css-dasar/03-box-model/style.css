@@ -1,0 +1,4 @@
+/* TODO 1: Terapkan box-sizing border-box ke semua elemen. */
+body { margin: 0; font-family: system-ui, sans-serif; background: #f1f5f9; }
+.container { /* TODO 2: width min(100% - 2rem, 640px), margin auto, dan padding. */ }
+.card { /* TODO 3: width 100%, padding, border, margin-bottom, background, dan radius. */ }

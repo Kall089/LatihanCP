@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply min-h-screen border-b-[16px] border-amber-400 bg-[#f7f2e9] text-stone-800 antialiased;
+  }
+}

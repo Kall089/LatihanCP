@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Penghitung Sesi Belajar</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 36rem; margin: 4rem auto; padding: 1rem; }
+      .controls { display: flex; gap: .75rem; flex-wrap: wrap; }
+      button { padding: .7rem 1rem; cursor: pointer; }
+      #count { font-size: 4rem; font-weight: 800; }
+      .success { color: #08783e; font-weight: 700; }
+    </style>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <p>Sesi belajar selesai hari ini:</p>
+      <output id="count">0</output>
+      <div class="controls">
+        <button id="decrease" type="button">Kurangi</button>
+        <button id="increase" type="button">Tambah</button>
+        <button id="reset" type="button">Reset</button>
+      </div>
+      <p id="message" aria-live="polite"></p>
+    </main>
+  </body>
+</html>

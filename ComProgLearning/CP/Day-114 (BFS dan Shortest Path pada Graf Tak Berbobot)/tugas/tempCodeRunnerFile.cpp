@@ -1,0 +1,1 @@
+if (color[v] == color[u])

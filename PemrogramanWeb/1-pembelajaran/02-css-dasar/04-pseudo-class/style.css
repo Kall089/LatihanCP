@@ -1,0 +1,6 @@
+body { font-family: system-ui, sans-serif; padding: 2rem; }
+input, .button { display: block; margin-top: .75rem; padding: .75rem 1rem; }
+.button { width: max-content; color: white; background: #2563eb; text-decoration: none; border-radius: .5rem; }
+/* TODO 1: Tambahkan warna background .button:hover. */
+/* TODO 2: Beri outline pada .button:focus-visible dan input:focus-visible. */
+/* TODO 3: Beri border merah pada input email terisi yang :invalid. */

@@ -1,0 +1,91 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+import java.util.Scanner;
+
+public class gajiPegawai {
+   public gajiPegawai() {
+   }
+
+   static int nilaiGapok(int var0) {
+      int var1;
+      if (var0 == 1) {
+         var1 = 1500000;
+      } else if (var0 == 2) {
+         var1 = 2000000;
+      } else if (var0 == 3) {
+         var1 = 3000000;
+      } else {
+         var1 = 5000000;
+      }
+
+      return var1;
+   }
+
+   static double potonganGaji(int var0) {
+      double var1;
+      if (var0 == 1) {
+         var1 = 0.1;
+      } else if (var0 == 2) {
+         var1 = 0.2;
+      } else if (var0 == 3) {
+         var1 = 0.2;
+      } else {
+         var1 = 0.4;
+      }
+
+      return var1;
+   }
+
+   static double tunjangan(int var0) {
+      double var1;
+      if (var0 == 1) {
+         var1 = 0.1;
+      } else if (var0 == 2) {
+         var1 = 0.2;
+      } else if (var0 == 3) {
+         var1 = 0.2;
+      } else {
+         var1 = 0.4;
+      }
+
+      return var1;
+   }
+
+   static String inputString(String var0) {
+      Scanner var1 = new Scanner(System.in);
+      System.out.print(var0);
+      String var2 = var1.nextLine();
+      return var2;
+   }
+
+   static int inputInt(String var0) {
+      Scanner var1 = new Scanner(System.in);
+      System.out.print(var0);
+      int var2 = var1.nextInt();
+      return var2;
+   }
+
+   static double hasilGatot(int var0) {
+      double var1 = (double)nilaiGapok(var0) + potonganGaji(var0) - tunjangan(var0);
+      return var1;
+   }
+
+   static void output(String var0, int var1, int var2, double var3, double var5, double var7) {
+      System.out.println("Nama: " + var0);
+      System.out.println("Golongan: " + var1);
+      System.out.println("Gaji pokok: " + var2);
+      System.out.println("Tunjangan: " + var3);
+      System.out.println("Potongan: " + var5);
+      System.out.println("Gaji Total: " + var7);
+   }
+
+   public static void main(String[] var0) {
+      String var1 = inputString("Masukkan nama: ");
+      int var2 = inputInt("Masukkan golongan: ");
+      System.out.println();
+      int var3 = nilaiGapok(var2);
+      double var4 = tunjangan(var2);
+      double var6 = potonganGaji(var2);
+      double var8 = hasilGatot(var2);
+      output(var1, var2, var3, var4, var6, var8);
+   }
+}

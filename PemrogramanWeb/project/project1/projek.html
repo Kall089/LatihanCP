@@ -1,0 +1,209 @@
+<!doctype html>
+
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Projek Pemrograman Web Edukasi UMKM</title>
+  </head>
+
+  <body>
+    <nav class="sticky shadow-sm top-0 z-50 bg-[#2c5ead]">
+      <div
+        id="navbar"
+        class="relative flex justify-between min-h-16 items-center px-7"
+      >
+        <div class="text-white">
+          <img src="" alt="" />
+          <h2 class="">INI LOGO</h2>
+        </div>
+        <input
+          type="checkbox"
+          id="nav-check"
+          class="peer sr-only"
+          aria-label="Buka atau tutup menu navigasi"
+        />
+        <label
+          for="nav-check"
+          class="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-[5px] rounded border border-white/40 md:hidden"
+        >
+          <span class="h-0.5 w-5 bg-white">&#8203;</span>
+          <span class="h-0.5 w-5 bg-white">&#8203;</span>
+          <span class="h-0.5 w-5 bg-white">&#8203;</span>
+        </label>
+        <div
+          class="text-white pt-2 absolute top-full right-0 left-0 hidden flex-col bg-[#1591DC] px-4 pb-3 shadow-lg peer-checked:flex md:static md:flex md:flex-row md:items-stretch md:gap-8 md:bg-transparent md:p-0 md:shadow-none"
+        >
+          <a
+            class="flex min-h-11 items-center border-b border-white/20 text-sm font-bold text-[#eaf7fc] hover:text-white md:border-0 cursor-pointer hover:underline"
+            href="#Home"
+            >Home</a
+          >
+          <a
+            class="flex min-h-11 items-center border-b border-white/20 text-sm font-bold text-[#eaf7fc] hover:text-white md:border-0 cursor-pointer hover:underline"
+            href=""
+            >UMKM</a
+          >
+          <a
+            class="flex min-h-11 items-center border-b border-white/20 text-sm font-bold text-[#eaf7fc]hover:text-white md:border-0 cursor-pointer hover:underline"
+            href=""
+            >MyProfile</a
+          >
+        </div>
+      </div>
+    </nav>
+    <section
+      id="home"
+      class="scroll-mt-16 flex items-center bg-[#ddf2fd] py-16 lg:flex min-h-[calc(100dvh-4rem)] lg:py-16"
+    >
+      <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+        <div
+          class="grid grid-cols-1 items-center gap-y-6 lg:grid-cols-[1.05fr_1fr] lg:grid-rows-[auto_1fr] lg:gap-x-14 lg:gap-y-3"
+        >
+          <div class="order-1 lg:col-start-1 lg:row-start-1">
+            <h1
+              class="mb-5 max-w-[620px] text-[43px] leading-[1.04] font-extrabold tracking-[-1.5px] text-[#164863] sm:text-5xl lg:text-[60px] lg:tracking-[-2.5px]"
+            >
+              Kembangkan bisnismu ke langkah berikutnya!
+            </h1>
+            <p
+              class="max-w-[550px] text-base leading-7 text-[#617d8b] sm:text-[#617d8b] sm:text-lg sm:leading-8"
+            >
+              Tunjukkan kontribusimu ke perkembangan Ekonomi Kecil Menengah demi
+              menggapai masa depan yang cerah
+            </p>
+          </div>
+
+          <figure
+            class="framed-image relative order-2 m-0 lg:col-start-2 lg:row-start-1 lg:row-span-2"
+          >
+            <img
+              class="z-1 block h-[300px] w-full object-cover sm:h-[400px] lg:h-[410px]"
+              src="images/image.png"
+              alt="UMKM"
+            />
+            <figcaption
+              class="absolute right-8 bottom-8 left-5 z-2 border-t border-white/70 pt-2.5 text-[13px] font-bold text-white [text-shadow:0_1px_7px_rgba(0,0,0,0.75)]"
+            >
+              UMKM
+            </figcaption>
+          </figure>
+
+          <a
+            href="#info"
+            class="order-3 justify-self-start rounded bg-[#164863] px-5 py-3 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5 hover:bg-[#427d9d] lg:col-start-1 lg:row-start-2 lg:mt-2 lg:self-start"
+            >Lihat UMKM</a
+          >
+        </div>
+      </div>
+    </section>
+    <section
+      class="scroll-mt-16 items-center lg:flex min-h-[calc(100dvh-4rem)] py-15 bg-[#ddf2fd]"
+    >
+      <div class="mx-auto w-full max-w-7xl px-5 sm:px-8">
+        <div
+          class="grid grid-cols-1 items-center gap-y-6 lg:grid-cols-3 lg:gap-x-10"
+        >
+          <div
+            class="order-1 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+          <div
+            class="order-2 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+          <div
+            class="order-2 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+          <div
+            class="order-3 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+          <div
+            class="order-2 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+          <div
+            class="order-3 min-h-[450px] bg-[url('images/image1.png')] bg-cover bg-center p-6 flex flex-col justify-between"
+          >
+            <h2 class="text-3xl font-bold text-[#443199]">Lorem Ipsum</h2>
+            <div>
+              <p class="text-white font-bold">
+                Alamat: Indonesia raya merdeka...
+              </p>
+              <p class="text-white font-bold">CONTACT: 0849174917421</p>
+              <a
+                class="text-white font-bold inline-block mt-5 rounded-lg bg-[#443199] px-4 py-2"
+                href="#"
+                >VIEW UMKM</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

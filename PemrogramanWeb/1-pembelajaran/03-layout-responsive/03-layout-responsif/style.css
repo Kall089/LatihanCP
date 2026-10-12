@@ -1,0 +1,48 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #172033;
+  background: #f3f6fb;
+}
+
+.site-header {
+  padding: 1rem;
+  background: #ffffff;
+  border-bottom: 1px solid #dbe2ef;
+  /* TODO 1: Aktifkan flex, ratakan secara horizontal, dan beri jarak. */
+}
+
+nav {
+  /* TODO 2: Gunakan flex dan gap agar tautan tersusun rapi. */
+}
+
+a {
+  color: #2455d6;
+  text-decoration: none;
+}
+
+main {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 3rem auto;
+}
+
+.card-grid {
+  /* TODO 3: Aktifkan CSS Grid dengan satu kolom dan gap. */
+}
+
+.card {
+  padding: 1.5rem;
+  background: white;
+  border: 1px solid #dbe2ef;
+  border-radius: 1rem;
+}
+
+/* TODO 4: Pada lebar minimal 640px, ubah grid menjadi dua kolom. */
+
+/* TODO 5: Pada lebar minimal 1024px, ubah grid menjadi tiga kolom. */
+
+/* TODO 6: Pada layar sempit, buat header dan navigasi tersusun vertikal. */

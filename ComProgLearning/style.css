@@ -1,0 +1,11 @@
+#box-nav {
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  padding: 20px;
+}
+
+#tombol-nav {
+  display: flex;
+  gap: 20px;
+}

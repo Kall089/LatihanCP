@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center; /* tengah horizontal */
+  align-items: center; /* tengah vertikal */
+
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%;
+  max-width: 900px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.kotak {
+  height: 100px;
+  background-color: royalblue;
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+}

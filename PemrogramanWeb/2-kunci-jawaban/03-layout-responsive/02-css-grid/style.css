@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f8fafc; }
+main { width: min(100% - 2rem, 960px); margin: 3rem auto; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.card { min-height: 8rem; padding: 1.5rem; background: white; border: 1px solid #cbd5e1; border-radius: .75rem; }
+.featured { grid-column: span 2; }
+@media (max-width: 640px) { .gallery { grid-template-columns: 1fr; } .featured { grid-column: auto; } }

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contoh praktik — katalog kecil</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="halaman">
+      <h1>Katalog kecil</h1>
+      <p class="pengantar">
+        CSS mengatur kartu dan jarak. JavaScript memfilter nama serta menandai
+        favorit. Tidak perlu React, Next, atau Laravel untuk file ini.
+      </p>
+
+      <label class="label-cari" for="cari">Cari produk</label>
+      <input id="cari" type="search" placeholder="Contoh: buku" />
+
+      <label class="label-cari" for="harga-max">Harga maksimal (rupiah)</label>
+      <input id="harga-max" type="number" min="0" placeholder="Kosongkan = semua" />
+
+      <p id="status" class="status" role="status">3 produk ditampilkan.</p>
+      <ul id="daftar" class="daftar"></ul>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

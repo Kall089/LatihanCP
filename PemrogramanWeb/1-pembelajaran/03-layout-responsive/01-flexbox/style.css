@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; }
+.site-header { padding: 1rem 2rem; border-bottom: 1px solid #cbd5e1; /* TODO: display flex, justify-content, align-items, gap, flex-wrap. */ }
+nav { /* TODO: display flex, gap, dan flex-wrap. */ }
+a { color: #1d4ed8; text-decoration: none; }
+.brand { color: #0f172a; font-size: 1.25rem; font-weight: 800; }

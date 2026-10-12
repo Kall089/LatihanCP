@@ -1,0 +1,277 @@
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  margin: 0;
+  background-color: #f0f2f4;
+  color: #2d3339;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.container {
+  width: 92%;
+  max-width: 980px;
+  margin: 35px auto;
+}
+
+.header {
+  margin: 0 0 18px;
+  padding: 24px 28px;
+  background-color: #243746;
+  color: white;
+  border-bottom: 5px solid #d99a32;
+  border-radius: 4px;
+  font-size: 28px;
+  letter-spacing: 1px;
+}
+
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: dense;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+}
+
+.profile > li {
+  margin: 0;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #d5dadd;
+  border-top: 3px solid #4f7b95;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.profile > li:hover {
+  border-top-color: #d99a32;
+}
+
+.course-section,
+.skill-section,
+.contact-section {
+  grid-column: 1 / 3;
+}
+
+.label {
+  color: #243746;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.photo-section {
+  background-color: white;
+  color: #2d3339;
+  border-top-color: #d99a32;
+  text-align: left;
+}
+
+.photo-label {
+  display: inline;
+  color: #243746;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-photo {
+  display: block;
+  width: 180px;
+  height: 210px;
+  margin: 15px auto 5px;
+  border: 3px solid #4f7b95;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.about-section {
+  background-color: #fffaf1;
+  border-top-color: #d99a32;
+}
+
+.description {
+  margin: 10px 0 0;
+  text-align: justify;
+}
+
+.hobby-list {
+  margin: 10px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.hobby-list li {
+  display: inline-block;
+  margin: 5px 4px 0 0;
+  padding: 5px 10px;
+  background-color: #e8f0f4;
+  border: 1px solid #c5d4dc;
+  border-radius: 3px;
+}
+
+.semester-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 12px 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.semester {
+  padding: 14px;
+  background-color: #f4f7f8;
+  border: 1px solid #d5dadd;
+  border-radius: 3px;
+  color: #243746;
+  font-weight: bold;
+}
+
+.subject-list {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  color: #2d3339;
+  font-weight: normal;
+}
+
+.subject-list li,
+.social-list li {
+  margin-bottom: 4px;
+}
+
+.social-list {
+  margin: 10px 0 0;
+  padding-left: 25px;
+}
+
+.social-media {
+  color: #326b8c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.social-media:hover {
+  color: #b87916;
+  text-decoration: underline;
+}
+
+.table-container {
+  margin-top: 14px;
+  overflow-x: auto;
+}
+
+.skill-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+.skill-table th,
+.skill-table td {
+  padding: 10px 12px;
+  border: 1px solid #c9ced2;
+  text-align: left;
+}
+
+.skill-table th {
+  background-color: #243746;
+  color: white;
+}
+
+.skill-table tr:nth-child(even) {
+  background-color: #f1f5f7;
+}
+
+.contact-section {
+  background-color: #eef4f6;
+  border-top-color: #347451;
+}
+
+.contact-text {
+  margin: 5px 0 18px;
+}
+
+.contact-form {
+  margin: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #243746;
+  font-weight: bold;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #aeb8be;
+  border-radius: 3px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: #326b8c;
+  outline: 2px solid #bfd7e4;
+}
+
+.form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  background-color: #347451;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #285c3f;
+}
+
+@media (max-width: 700px) {
+  .container {
+    margin: 20px auto;
+  }
+
+  .header {
+    padding: 20px;
+    font-size: 23px;
+    text-align: center;
+  }
+
+  .profile,
+  .semester-list,
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .course-section,
+  .skill-section,
+  .contact-section {
+    grid-column: 1;
+  }
+}

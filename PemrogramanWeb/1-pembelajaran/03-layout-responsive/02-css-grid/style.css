@@ -1,0 +1,7 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f8fafc; }
+main { width: min(100% - 2rem, 960px); margin: 3rem auto; }
+.gallery { /* TODO 1: display grid, tiga kolom, dan gap. */ }
+.card { min-height: 8rem; padding: 1.5rem; background: white; border: 1px solid #cbd5e1; border-radius: .75rem; }
+.featured { /* TODO 2: bentangkan dua kolom. */ }
+/* TODO 3: Pada max-width 640px jadikan satu kolom dan reset span featured. */

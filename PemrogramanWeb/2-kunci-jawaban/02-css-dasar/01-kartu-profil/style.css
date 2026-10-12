@@ -1,0 +1,55 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+  color: #172033;
+  background: #eef3ff;
+}
+
+.profile-card {
+  width: min(90%, 420px);
+  padding: 2rem;
+  text-align: center;
+  background: white;
+  border: 1px solid #dbe2ef;
+  border-radius: 1.25rem;
+  box-shadow: 0 1rem 2.5rem rgb(30 64 175 / 12%);
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.eyebrow {
+  color: #2455d6;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.description {
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.button {
+  display: inline-block;
+  text-decoration: none;
+  padding: .75rem 1rem;
+  color: white;
+  background: #2455d6;
+  border-radius: .625rem;
+}
+
+.button:hover { background: #183fae; }
+.button:focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }

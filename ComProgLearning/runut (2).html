@@ -1,0 +1,4249 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Runut — Visualisasi Algoritma</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f4f5f3;
+        --putih: #ffffff;
+        --tinta: #16191c;
+        --sedang: #54606b;
+        --pudar: #8b959d;
+        --garis: #e3e5e2;
+        --garis2: #d2d5d1;
+        --aksen: #1c6f6a;
+
+        --k-aktif: #8a5a00;
+        --k-aktif-bg: #fbefd4;
+        --k-aktif-br: #ebd5a3;
+        --k-hasil: #0b6046;
+        --k-hasil-bg: #dff0e7;
+        --k-hasil-br: #a9d6c2;
+        --k-buang: #9a3838;
+        --k-buang-bg: #fae6e4;
+        --k-buang-br: #ebbdb8;
+        --k-stack: #43407f;
+        --k-stack-bg: #eae9f6;
+        --k-stack-br: #c4c1e6;
+
+        --body: "Instrument Sans", system-ui, -apple-system, sans-serif;
+        --mono: "JetBrains Mono", ui-monospace, monospace;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--bg);
+        color: var(--tinta);
+        font-family: var(--body);
+        font-size: 15px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection {
+        background: var(--k-aktif-bg);
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 236px 1fr;
+        min-height: 100vh;
+      }
+      @media (max-width: 880px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- RAIL ---------- */
+      aside {
+        border-right: 1px solid var(--garis);
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        padding: 28px 0 48px;
+        background: var(--bg);
+      }
+      @media (max-width: 880px) {
+        aside {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--garis);
+          padding-bottom: 20px;
+        }
+      }
+      .brand {
+        padding: 0 24px 20px;
+      }
+      .brand h1 {
+        font-size: 19px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .brand p {
+        font-size: 12px;
+        color: var(--pudar);
+        margin-top: 2px;
+      }
+      .bab {
+        padding: 20px 24px 7px;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--pudar);
+      }
+      .nl {
+        display: flex;
+        gap: 11px;
+        align-items: baseline;
+        padding: 6px 24px;
+        cursor: pointer;
+        font-size: 13.5px;
+        color: var(--sedang);
+        transition: 0.12s;
+        border-left: 2px solid transparent;
+      }
+      .nl .no {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--pudar);
+        min-width: 16px;
+      }
+      .nl:hover {
+        color: var(--tinta);
+        background: rgba(0, 0, 0, 0.025);
+      }
+      .nl.on {
+        color: var(--aksen);
+        border-left-color: var(--aksen);
+        font-weight: 600;
+        background: rgba(28, 111, 106, 0.05);
+      }
+      .nl.on .no {
+        color: var(--aksen);
+      }
+
+      /* ---------- MAIN ---------- */
+      main {
+        padding: 44px 44px 100px;
+        max-width: 880px;
+      }
+      @media (max-width: 640px) {
+        main {
+          padding: 26px 18px 70px;
+        }
+      }
+
+      .eb {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--pudar);
+      }
+      h2.jd {
+        font-size: clamp(26px, 4.4vw, 34px);
+        font-weight: 600;
+        letter-spacing: -0.026em;
+        line-height: 1.15;
+        margin: 9px 0 8px;
+      }
+      .sb {
+        color: var(--sedang);
+        font-size: 15.5px;
+        max-width: 60ch;
+        margin-bottom: 34px;
+      }
+
+      .sec {
+        margin: 44px 0 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .sec h3 {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+      }
+      .sec .rl {
+        flex: 1;
+        height: 1px;
+        background: var(--garis2);
+      }
+
+      /* materi */
+      .mt {
+        margin-bottom: 22px;
+      }
+      .mt h4 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 7px;
+        letter-spacing: -0.01em;
+      }
+      .mt p {
+        color: var(--sedang);
+        font-size: 14.5px;
+        max-width: 66ch;
+      }
+      .mt p + p {
+        margin-top: 10px;
+      }
+      .mt strong {
+        color: var(--tinta);
+        font-weight: 600;
+      }
+      .mt.kunci {
+        border-left: 2px solid var(--aksen);
+        padding-left: 18px;
+      }
+      .mt.kunci h4 {
+        color: var(--aksen);
+      }
+      code.c {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        background: rgba(0, 0, 0, 0.045);
+        padding: 1.5px 5px;
+        border-radius: 3px;
+        color: var(--tinta);
+      }
+
+      /* ---------- KONTROL ---------- */
+      .opt {
+        margin-bottom: 20px;
+      }
+      .ol {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--pudar);
+        margin-bottom: 6px;
+      }
+      .og {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-bottom: 13px;
+      }
+      button.o {
+        font-family: var(--body);
+        font-size: 12.5px;
+        background: var(--putih);
+        color: var(--sedang);
+        border: 1px solid var(--garis2);
+        border-radius: 5px;
+        padding: 6px 12px;
+        cursor: pointer;
+        transition: 0.12s;
+      }
+      button.o:hover {
+        border-color: var(--pudar);
+        color: var(--tinta);
+      }
+      button.o.on {
+        background: var(--tinta);
+        color: var(--putih);
+        border-color: var(--tinta);
+        font-weight: 500;
+      }
+
+      .bar {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      button.b {
+        font-family: var(--body);
+        font-size: 13.5px;
+        background: var(--putih);
+        color: var(--tinta);
+        border: 1px solid var(--garis2);
+        border-radius: 6px;
+        padding: 8px 15px;
+        cursor: pointer;
+        transition: 0.12s;
+      }
+      button.b:hover:not(:disabled) {
+        border-color: var(--pudar);
+      }
+      button.b:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      button.b.u {
+        background: var(--tinta);
+        color: var(--putih);
+        border-color: var(--tinta);
+        font-weight: 500;
+      }
+      button.b.u:hover:not(:disabled) {
+        background: #000;
+      }
+      button.b.run {
+        background: var(--aksen);
+        color: #fff;
+        border-color: var(--aksen);
+      }
+
+      .st {
+        font-family: var(--mono);
+        font-size: 11px;
+        color: var(--pudar);
+        margin-bottom: 6px;
+      }
+      .nr {
+        font-size: 14.5px;
+        min-height: 48px;
+        margin-bottom: 22px;
+        color: var(--sedang);
+        max-width: 70ch;
+        line-height: 1.6;
+      }
+      .nr b {
+        color: var(--tinta);
+      }
+      .tg {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        padding: 3px 7px;
+        border-radius: 3px;
+        margin-right: 9px;
+        vertical-align: 1.5px;
+        border: 1px solid;
+      }
+
+      /* ---------- PANEL ---------- */
+      .pn {
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        padding: 18px 20px;
+        margin-bottom: 14px;
+      }
+      .pl {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--pudar);
+        margin-bottom: 13px;
+      }
+      .scroll {
+        overflow-x: auto;
+      }
+
+      .row {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        align-items: flex-end;
+      }
+      .cl {
+        text-align: center;
+      }
+      .cl .i {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        color: var(--pudar);
+        margin-bottom: 4px;
+        height: 13px;
+      }
+      .cl .v {
+        font-family: var(--mono);
+        font-size: 15px;
+        font-weight: 500;
+        min-width: 42px;
+        padding: 9px 8px;
+        border: 1px solid var(--garis2);
+        border-radius: 5px;
+        background: var(--putih);
+        transition: 0.15s;
+      }
+      .cl .u {
+        font-family: var(--mono);
+        font-size: 10.5px;
+        color: var(--pudar);
+        margin-top: 5px;
+        height: 14px;
+      }
+      .cl.a .v {
+        background: var(--k-aktif-bg);
+        border-color: var(--k-aktif-br);
+        color: var(--k-aktif);
+        font-weight: 700;
+      }
+      .cl.h .v {
+        background: var(--k-hasil-bg);
+        border-color: var(--k-hasil-br);
+        color: var(--k-hasil);
+      }
+      .cl.b .v {
+        background: var(--k-buang-bg);
+        border-color: var(--k-buang-br);
+        color: var(--k-buang);
+      }
+      .cl.s .v {
+        background: var(--k-stack-bg);
+        border-color: var(--k-stack-br);
+        color: var(--k-stack);
+      }
+      .cl.dim {
+        opacity: 0.3;
+      }
+
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+      @media (max-width: 820px) {
+        .two {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ---------- KODE ---------- */
+      .code {
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        padding: 14px 0;
+        overflow-x: auto;
+        margin-bottom: 14px;
+      }
+      .cb {
+        display: flex;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        line-height: 1.9;
+        border-left: 2px solid transparent;
+      }
+      .cb .n {
+        width: 30px;
+        flex: none;
+        text-align: right;
+        padding-right: 12px;
+        color: #c3c8cc;
+        user-select: none;
+      }
+      .cb .t {
+        white-space: pre;
+        color: var(--sedang);
+        padding-right: 20px;
+      }
+      .cb .cm {
+        color: var(--pudar);
+      }
+      .cb.on {
+        background: var(--k-aktif-bg);
+        border-left-color: var(--k-aktif-br);
+      }
+      .cb.on .t {
+        color: var(--tinta);
+      }
+      .cb.on.h {
+        background: var(--k-hasil-bg);
+        border-left-color: var(--k-hasil-br);
+      }
+      .cb.on.b {
+        background: var(--k-buang-bg);
+        border-left-color: var(--k-buang-br);
+      }
+      .cb.on.s {
+        background: var(--k-stack-bg);
+        border-left-color: var(--k-stack-br);
+      }
+
+      /* ---------- HITUNG ---------- */
+      .hg {
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 14px;
+      }
+      .hg .hh {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        color: var(--pudar);
+        padding: 14px 18px 9px;
+      }
+      .hr {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 18px;
+        border-top: 1px solid var(--garis);
+      }
+      .hr .l {
+        font-size: 13.5px;
+        color: var(--sedang);
+        flex: 1;
+      }
+      .hr .e {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        color: var(--pudar);
+        text-align: right;
+      }
+      .hr .v {
+        font-family: var(--mono);
+        font-size: 17px;
+        font-weight: 600;
+        min-width: 42px;
+        text-align: right;
+        color: var(--tinta);
+      }
+      .hr.win {
+        background: var(--k-hasil-bg);
+      }
+      .hr.win .v,
+      .hr.win .l {
+        color: var(--k-hasil);
+      }
+      .hr.lose .v {
+        color: var(--pudar);
+      }
+      .sp {
+        margin: 12px 18px 16px;
+        padding: 10px 13px;
+        border-radius: 6px;
+        font-family: var(--mono);
+        font-size: 12px;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid var(--garis);
+      }
+      .sp.ok {
+        background: var(--k-hasil-bg);
+        border-color: var(--k-hasil-br);
+        color: var(--k-hasil);
+      }
+      .sp.no {
+        background: var(--k-buang-bg);
+        border-color: var(--k-buang-br);
+        color: var(--k-buang);
+      }
+
+      /* ---------- STACK ---------- */
+      .stk {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .fr {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        padding: 8px 12px;
+        border-radius: 5px;
+        background: var(--putih);
+        border: 1px solid var(--garis2);
+        color: var(--sedang);
+      }
+      .fr.top {
+        background: var(--k-stack-bg);
+        border-color: var(--k-stack-br);
+        color: var(--k-stack);
+      }
+      .fr .c {
+        font-size: 9.5px;
+        opacity: 0.75;
+      }
+      .kosong {
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--pudar);
+      }
+
+      /* ---------- TABEL DP ---------- */
+      table.dp {
+        border-collapse: separate;
+        border-spacing: 2px;
+        font-family: var(--mono);
+        font-size: 11.5px;
+      }
+      table.dp td.hd {
+        padding: 3px 7px;
+        color: var(--pudar);
+        font-size: 10px;
+        white-space: nowrap;
+      }
+      table.dp td.hd.on {
+        color: var(--k-aktif);
+        font-weight: 700;
+      }
+      .dc {
+        min-width: 30px;
+        padding: 7px 4px;
+        text-align: center;
+        border: 1px solid var(--garis2);
+        border-radius: 4px;
+        background: var(--putih);
+      }
+      .dc.f {
+        background: #f0f5f2;
+        border-color: #d6e4dc;
+      }
+      .dc.n {
+        background: var(--k-aktif-bg);
+        border-color: var(--k-aktif-br);
+        color: var(--k-aktif);
+        font-weight: 700;
+      }
+      .dc.a {
+        background: var(--k-stack-bg);
+        border-color: var(--k-stack-br);
+        color: var(--k-stack);
+      }
+      .dc.b {
+        background: var(--k-hasil-bg);
+        border-color: var(--k-hasil-br);
+        color: var(--k-hasil);
+      }
+      .dc.j {
+        background: var(--k-hasil-bg);
+        border-color: var(--k-hasil);
+        color: var(--k-hasil);
+        font-weight: 700;
+      }
+
+      /* ---------- HASIL ---------- */
+      .hs {
+        border: 1px solid var(--k-hasil-br);
+        background: var(--k-hasil-bg);
+        border-radius: 8px;
+        padding: 16px 20px;
+        margin-bottom: 14px;
+      }
+      .hs.no {
+        border-color: var(--k-buang-br);
+        background: var(--k-buang-bg);
+      }
+      .hs .a {
+        font-size: 27px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--k-hasil);
+      }
+      .hs.no .a {
+        color: var(--k-buang);
+      }
+      .hs .k {
+        font-size: 13.5px;
+        color: var(--sedang);
+        margin-top: 4px;
+      }
+
+      /* ---------- TEST & SOAL ---------- */
+      table.tc {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13.5px;
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      table.tc th {
+        font-family: var(--mono);
+        font-size: 9.5px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--pudar);
+        text-align: left;
+        padding: 11px 14px;
+        border-bottom: 1px solid var(--garis);
+        font-weight: 400;
+        background: #fafbfa;
+      }
+      table.tc td {
+        padding: 11px 14px;
+        border-bottom: 1px solid var(--garis);
+        vertical-align: top;
+        color: var(--sedang);
+      }
+      table.tc tr:last-child td {
+        border-bottom: 0;
+      }
+      table.tc td.io {
+        font-family: var(--mono);
+        font-size: 12px;
+        white-space: pre-line;
+        color: var(--tinta);
+      }
+      table.tc td.ou {
+        font-family: var(--mono);
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--k-hasil);
+      }
+      .tepi {
+        font-family: var(--mono);
+        font-size: 9px;
+        color: var(--k-buang);
+        background: var(--k-buang-bg);
+        border: 1px solid var(--k-buang-br);
+        border-radius: 3px;
+        padding: 1px 5px;
+        margin-right: 8px;
+        vertical-align: 1px;
+      }
+
+      .sl {
+        background: var(--putih);
+        border: 1px solid var(--garis);
+        border-radius: 8px;
+        padding: 20px 22px;
+      }
+      .sl h4 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .sl > p {
+        color: var(--sedang);
+        font-size: 14px;
+        max-width: 66ch;
+      }
+      .sl dl {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 8px 20px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--garis);
+      }
+      .sl dt {
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--pudar);
+        padding-top: 3px;
+      }
+      .sl dd {
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--tinta);
+        white-space: pre-line;
+      }
+      .sl .ct {
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid var(--garis);
+        font-size: 13.5px;
+        color: var(--sedang);
+      }
+      .sl .ct b {
+        color: var(--aksen);
+      }
+
+      svg text {
+        font-family: var(--mono);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside>
+        <div class="brand">
+          <h1>Runut</h1>
+          <p>visualisasi algoritma</p>
+        </div>
+        <nav id="nav"></nav>
+      </aside>
+
+      <main>
+        <div class="eb" id="eb"></div>
+        <h2 class="jd" id="jd"></h2>
+        <p class="sb" id="sb"></p>
+
+        <div id="materi"></div>
+
+        <div class="sec">
+          <h3>Jalankan</h3>
+          <div class="rl"></div>
+        </div>
+        <div class="opt" id="opsi"></div>
+        <div class="bar">
+          <button class="b" id="bp">← Mundur</button>
+          <button class="b u" id="bn">Maju →</button>
+          <button class="b" id="ba">Putar</button>
+          <button class="b" id="bs">Ke hasil</button>
+          <button class="b" id="br">Ulang</button>
+        </div>
+        <div class="st" id="stt"></div>
+        <p class="nr" id="nr"></p>
+
+        <div class="two">
+          <div id="kol1"></div>
+          <div id="kol2"></div>
+        </div>
+        <div id="hasil"></div>
+
+        <div class="sec">
+          <h3>Test case</h3>
+          <div class="rl"></div>
+        </div>
+        <div id="tc"></div>
+
+        <div class="sec">
+          <h3>Soal</h3>
+          <div class="rl"></div>
+        </div>
+        <div id="soal"></div>
+      </main>
+    </div>
+
+    <script>
+      const E = (id) => document.getElementById(id);
+      const esc = (s) =>
+        String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+      const TAG = {
+        mulai: ["MULAI", "var(--pudar)", "transparent", "var(--garis2)"],
+        cek: [
+          "CEK",
+          "var(--k-aktif)",
+          "var(--k-aktif-bg)",
+          "var(--k-aktif-br)",
+        ],
+        pilih: [
+          "PILIH",
+          "var(--k-aktif)",
+          "var(--k-aktif-bg)",
+          "var(--k-aktif-br)",
+        ],
+        ambil: [
+          "AMBIL",
+          "var(--k-hasil)",
+          "var(--k-hasil-bg)",
+          "var(--k-hasil-br)",
+        ],
+        rekor: [
+          "REKOR",
+          "var(--k-hasil)",
+          "var(--k-hasil-bg)",
+          "var(--k-hasil-br)",
+        ],
+        jawab: [
+          "JAWAB",
+          "var(--k-hasil)",
+          "var(--k-hasil-bg)",
+          "var(--k-hasil-br)",
+        ],
+        buang: [
+          "BUANG",
+          "var(--k-buang)",
+          "var(--k-buang-bg)",
+          "var(--k-buang-br)",
+        ],
+        pangkas: [
+          "PANGKAS",
+          "var(--k-buang)",
+          "var(--k-buang-bg)",
+          "var(--k-buang-br)",
+        ],
+        lewat: ["LEWATI", "var(--pudar)", "transparent", "var(--garis2)"],
+        tetap: ["TETAP", "var(--pudar)", "transparent", "var(--garis2)"],
+        masuk: [
+          "MASUK",
+          "var(--k-stack)",
+          "var(--k-stack-bg)",
+          "var(--k-stack-br)",
+        ],
+        balik: [
+          "BACKTRACK",
+          "var(--k-stack)",
+          "var(--k-stack-bg)",
+          "var(--k-stack-br)",
+        ],
+        selesai: [
+          "SELESAI",
+          "var(--k-hasil)",
+          "var(--k-hasil-bg)",
+          "var(--k-hasil-br)",
+        ],
+      };
+      const KLS = {
+        ambil: "h",
+        rekor: "h",
+        jawab: "h",
+        selesai: "h",
+        buang: "b",
+        pangkas: "b",
+        masuk: "s",
+        balik: "s",
+      };
+
+      /* helper */
+      function cl(v, o) {
+        o = o || {};
+        return `<div class="cl ${o.c || ""}"><div class="i">${o.i !== undefined ? o.i : ""}</div><div class="v">${v}</div><div class="u">${o.u !== undefined ? o.u : ""}</div></div>`;
+      }
+      function pn(label, isi) {
+        return `<div class="pn"><div class="pl">${label}</div><div class="scroll">${isi}</div></div>`;
+      }
+      function hg(judul, baris, simpul) {
+        let h = `<div class="hg"><div class="hh">${judul}</div>`;
+        baris.forEach((b) => {
+          h += `<div class="hr ${b.win ? "win" : b.lose ? "lose" : ""}"><span class="l">${b.l}</span>${b.e ? `<span class="e">${b.e}</span>` : ""}<span class="v">${b.v}</span></div>`;
+        });
+        if (simpul) h += `<div class="sp ${simpul.j || ""}">${simpul.t}</div>`;
+        return h + "</div>";
+      }
+      function stk(arr, fmt) {
+        if (!arr || !arr.length) return '<div class="kosong">kosong</div>';
+        let h = '<div class="stk">';
+        for (let k = arr.length - 1; k >= 0; k--) {
+          const t = k === arr.length - 1;
+          h += `<div class="fr ${t ? "top" : ""}">${fmt(arr[k], k)}${t ? '<span class="c">atas</span>' : "<span></span>"}</div>`;
+        }
+        return h + "</div>";
+      }
+      function hs(a, k, no) {
+        return `<div class="hs ${no ? "no" : ""}"><div class="a">${a}</div><div class="k">${k}</div></div>`;
+      }
+
+      const M = {};
+
+      /* ============ 01 GENERATE PARENTHESES ============ */
+      M.paren = {
+        bab: "Backtracking",
+        no: "1",
+        judul: "Generate Parentheses",
+        sub: "Pola pilih → jelajahi → rapikan, dijalankan pada kasus paling bersih.",
+        materi: [
+          {
+            h: "Idenya",
+            p: [
+              "Bangun string satu huruf demi satu. Di tiap posisi cuma ada dua pilihan, dan dua aturan menjaga string selalu valid.",
+              'Boleh <code class="c">(</code> selama jatah belum habis. Boleh <code class="c">)</code> selama ada <code class="c">(</code> yang belum berpasangan.',
+            ],
+          },
+          {
+            k: 1,
+            h: "Yang perlu diingat",
+            p: [
+              'Pilih satu bahan, jelajahi ke dalam, lalu <strong>rapikan</strong> sebelum mencoba bahan lain. Bagian rapikan itulah <code class="c">pop_back()</code>.',
+            ],
+          },
+        ],
+        kode: [
+          "void bt(string &cur, int open, int close) {",
+          "    if (cur.size() == 2*n) { cetak(cur); return; }",
+          "",
+          "    if (open < n) {",
+          "        cur.push_back('(');",
+          "        bt(cur, open+1, close);",
+          "        cur.pop_back();       // rapikan",
+          "    }",
+          "    if (close < open) {",
+          "        cur.push_back(')');",
+          "        bt(cur, open, close+1);",
+          "        cur.pop_back();",
+          "    }",
+          "}",
+        ],
+        opsi: [{ k: "n", l: "nilai n", p: [1, 2, 3], t: (v) => "n = " + v }],
+        inp: { n: 3 },
+        build(I) {
+          const n = I.n,
+            S = [],
+            out = [],
+            st = [];
+          const q = (ln, tag, d, cur, o, c) =>
+            S.push({ ln, tag, d, cur, o, c, out: out.slice(), st: st.slice() });
+          q(
+            [],
+            "mulai",
+            "String masih kosong. Tiap langkah menambah satu kurung, lalu menghapusnya lagi saat mundur.",
+            "",
+            0,
+            0,
+          );
+          (function r(cur, o, c) {
+            st.push(cur);
+            q(
+              [1, 2],
+              "masuk",
+              `Masuk bt("${cur || "ε"}"), buka=${o}, tutup=${c}.`,
+              cur,
+              o,
+              c,
+            );
+            if (cur.length === 2 * n) {
+              out.push(cur);
+              q(
+                [2],
+                "jawab",
+                `Panjang ${2 * n} tercapai — cetak <b>${cur}</b>.`,
+                cur,
+                o,
+                c,
+              );
+              st.pop();
+              return;
+            }
+            if (o < n) {
+              q(
+                [4, 5, 6],
+                "pilih",
+                `buka(${o}) &lt; n(${n}) → tambah <code class="c">(</code>.`,
+                cur,
+                o,
+                c,
+              );
+              r(cur + "(", o + 1, c);
+              q(
+                [7],
+                "balik",
+                `Hapus <code class="c">(</code>, kembali ke "${cur || "ε"}".`,
+                cur,
+                o,
+                c,
+              );
+            } else
+              q(
+                [4],
+                "pangkas",
+                `Jatah <code class="c">(</code> habis — cabang dipangkas.`,
+                cur,
+                o,
+                c,
+              );
+            if (c < o) {
+              q(
+                [9, 10, 11],
+                "pilih",
+                `tutup(${c}) &lt; buka(${o}) → tambah <code class="c">)</code>.`,
+                cur,
+                o,
+                c,
+              );
+              r(cur + ")", o, c + 1);
+              q(
+                [12],
+                "balik",
+                `Hapus <code class="c">)</code>, kembali ke "${cur || "ε"}".`,
+                cur,
+                o,
+                c,
+              );
+            } else
+              q(
+                [9],
+                "pangkas",
+                `Belum ada <code class="c">(</code> untuk dipasangkan — dipangkas.`,
+                cur,
+                o,
+                c,
+              );
+            st.pop();
+            q(
+              [14],
+              "balik",
+              `Semua cabang "${cur || "ε"}" habis — kembali ke pemanggil.`,
+              cur,
+              o,
+              c,
+            );
+          })("", 0, 0);
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Ditemukan <b>${out.length}</b> kombinasi.`,
+            cur: "",
+            o: 0,
+            c: 0,
+            out: out.slice(),
+            st: [],
+            end: { v: out.length },
+          });
+          return S;
+        },
+        kiri(s, I) {
+          return pn(
+            "String yang sedang dibangun",
+            `<div style="font-family:var(--mono);font-size:26px;letter-spacing:3px;min-height:38px;font-weight:500">${s.cur ? esc(s.cur) : '<span style="font-size:14px;color:var(--pudar)">kosong</span>'}</div>
+   <div class="row" style="margin-top:14px">${cl(s.o, { u: "buka" })}${cl(s.c, { u: "tutup" })}${cl(I.n, { u: "n" })}${cl(s.cur.length + "/" + 2 * I.n, { u: "panjang" })}</div>`,
+          );
+        },
+        kanan(s) {
+          let h = pn(
+            "Tumpukan pemanggilan",
+            stk(s.st, (x) => `<span>bt("${x || "ε"}")</span>`),
+          );
+          h += pn(
+            "Hasil",
+            s.out.length
+              ? `<div class="row">${s.out.map((o) => cl(esc(o), { c: "h" })).join("")}</div>`
+              : '<div class="kosong">belum ada</div>',
+          );
+          return h;
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v + " kombinasi",
+                "Semuanya valid dan terurut — karena ( selalu dicoba lebih dulu.",
+              )
+            : "";
+        },
+        tests: [
+          ["3", "((()))\n(()())\n(())()\n()(())\n()()()", "5 baris"],
+          ["1", "()", ""],
+          ["2", "(())\n()()", ""],
+          ["4", "14 baris", "bilangan Catalan", 1],
+        ],
+        soal: {
+          j: "Generate Parentheses",
+          i: "Diberikan bilangan n, hasilkan semua kombinasi valid dari n pasang kurung buka-tutup.",
+          io: [
+            ["Input", "Satu bilangan n"],
+            ["Output", "Semua kombinasi, satu per baris"],
+            ["Batas", "1 ≤ n ≤ 8"],
+            ["Contoh", "3"],
+            ["Hasil", "((()))\n(()())\n(())()\n()(())\n()()()"],
+          ],
+          c: "Karena ( selalu dicoba sebelum ), output otomatis terurut. Tidak perlu sort tambahan.",
+        },
+      };
+
+      /* ============ 02 PERMUTASI KEMBAR ============ */
+      M.permut = {
+        bab: "Backtracking",
+        no: "2",
+        judul: "Permutasi dengan Angka Kembar",
+        sub: "Satu baris if memangkas separuh pohon. Tanpa itu, jawabanmu dobel.",
+        materi: [
+          {
+            h: "Kenapa dobel",
+            p: [
+              'Dua angka <code class="c">1</code> dianggap benda berbeda oleh komputer, karena ia membedakan lewat posisi di array. Jalur "pakai 1 kiri dulu" dan "pakai 1 kanan dulu" jadi dua cabang — padahal saat dicetak identik.',
+            ],
+          },
+          {
+            k: 1,
+            h: "Aturan antrean",
+            p: [
+              'Di antara angka kembar, yang berhak jalan duluan selalu yang <strong>paling kiri</strong>. Kembar berikutnya baru boleh ikut kalau kembar sebelumnya sudah masuk ke <code class="c">cur</code>.',
+              'Syarat <code class="c">!used[i-1]</code> memeriksa itu: kalau tetangga kiri masih nganggur, kamu sedang menyalip antrean.',
+            ],
+          },
+          {
+            h: "Sort itu wajib",
+            p: [
+              'Tanpa sort, angka kembar bisa terpisah jauh dan pengecekan "tetangga kiri" gagal mendeteksinya.',
+            ],
+          },
+        ],
+        kode: [
+          "sort(a.begin(), a.end());",
+          "",
+          "void bt() {",
+          "    if (cur.size() == n) { cetak(cur); return; }",
+          "",
+          "    for (int i = 0; i < n; i++) {",
+          "        if (used[i]) continue;",
+          "        if (i>0 && a[i]==a[i-1] && !used[i-1]) continue;",
+          "",
+          "        used[i]=true;  cur.push_back(a[i]);",
+          "        bt();",
+          "        cur.pop_back();  used[i]=false;",
+          "    }",
+          "}",
+        ],
+        opsi: [
+          {
+            k: "fix",
+            l: "baris anti-duplikat",
+            p: [1, 0],
+            t: (v) => (v ? "dipakai" : "dihapus"),
+          },
+        ],
+        inp: { fix: 1 },
+        build(I) {
+          const A = [1, 1, 2],
+            n = 3,
+            S = [],
+            used = [0, 0, 0],
+            cur = [],
+            out = [];
+          const q = (ln, tag, d, i, ck) =>
+            S.push({
+              ln,
+              tag,
+              d,
+              A,
+              cur: cur.slice(),
+              used: used.slice(),
+              out: out.slice(),
+              i,
+              ck,
+            });
+          q(
+            [1],
+            "mulai",
+            `Array sudah di-sort: <b>1 1 2</b>. Angka kembar kini bersebelahan.`,
+            null,
+            null,
+          );
+          (function r() {
+            if (cur.length === n) {
+              out.push(cur.join(" "));
+              q(
+                [4],
+                "jawab",
+                `Penuh — cetak <b>${cur.join(" ")}</b>.`,
+                null,
+                null,
+              );
+              return;
+            }
+            for (let i = 0; i < n; i++) {
+              if (used[i]) {
+                q([7], "lewat", `i=${i}: a[${i}] sedang dipakai.`, i, { u: 1 });
+                continue;
+              }
+              const kb = i > 0 && A[i] === A[i - 1],
+                ng = i > 0 ? !used[i - 1] : null;
+              if (I.fix && kb && ng) {
+                q(
+                  [8],
+                  "pangkas",
+                  `i=${i}: kembar dengan a[${i - 1}], tapi tetangga kiri masih nganggur — menyalip antrean, dipangkas.`,
+                  i,
+                  { u: 0, k: 1, g: 1 },
+                );
+                continue;
+              }
+              q(
+                [10],
+                "pilih",
+                `i=${i}: lolos syarat, ambil a[${i}]=${A[i]}.`,
+                i,
+                { u: 0, k: kb, g: ng },
+              );
+              used[i] = 1;
+              cur.push(A[i]);
+              r();
+              cur.pop();
+              used[i] = 0;
+              q(
+                [12],
+                "balik",
+                `Rapikan: keluarkan ${A[i]}, used[${i}] kembali false.`,
+                i,
+                null,
+              );
+            }
+          })();
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Keluar <b>${out.length}</b> baris.`,
+            A,
+            cur: [],
+            used: [0, 0, 0],
+            out: out.slice(),
+            i: null,
+            ck: null,
+            end: { v: out.length, benar: 3 },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Array a — tetap, sudah terurut",
+            `<div class="row">${s.A.map((v, k) => cl(v, { i: k, u: s.used[k] ? "dipakai" : "bebas", c: s.i === k ? "a" : s.used[k] ? "s" : "" })).join("")}</div>`,
+          );
+          if (s.ck) {
+            const r = [
+              { l: "used[i]", v: s.ck.u ? "true" : "false", lose: !s.ck.u },
+            ];
+            if (s.ck.k !== undefined && s.i > 0) {
+              r.push({
+                l: `a[${s.i}] == a[${s.i - 1}]`,
+                v: s.ck.k ? "true" : "false",
+                win: !!s.ck.k,
+              });
+              r.push({
+                l: `!used[${s.i - 1}]`,
+                e: "kiri nganggur?",
+                v: s.ck.g ? "true" : "false",
+                win: !!s.ck.g,
+              });
+            }
+            h += hg("Cek syarat pangkas", r, {
+              j: s.tag === "pangkas" ? "no" : "ok",
+              t:
+                s.tag === "pangkas"
+                  ? "ketiganya benar → continue"
+                  : "ada yang salah → boleh dipilih",
+            });
+          }
+          return h;
+        },
+        kanan(s) {
+          let h = pn(
+            "cur",
+            s.cur.length
+              ? `<div class="row">${s.cur.map((v) => cl(v, { c: "h" })).join("")}</div>`
+              : '<div class="kosong">kosong</div>',
+          );
+          h += pn(
+            "Output",
+            s.out.length
+              ? `<div class="row">${s.out.map((o, k) => cl(o, { c: s.out.indexOf(o) !== k ? "b" : "h", u: s.out.indexOf(o) !== k ? "dobel" : "" })).join("")}</div>`
+              : '<div class="kosong">belum ada</div>',
+          );
+          return h;
+        },
+        end(s) {
+          if (!s.end) return "";
+          const ok = s.end.v === s.end.benar;
+          return hs(
+            s.end.v + " baris",
+            ok
+              ? "Semuanya unik."
+              : `Seharusnya ${s.end.benar} baris — ada ${s.end.v - s.end.benar} yang dobel.`,
+            !ok,
+          );
+        },
+        tests: [
+          ["3\n1 1 2", "1 1 2\n1 2 1\n2 1 1", "3 baris"],
+          ["3\n1 2 3", "6 permutasi", ""],
+          ["3\n1 1 1", "1 1 1", "1 baris", 1],
+          ["4\n1 1 2 2", "6 baris", "", 1],
+        ],
+        soal: {
+          j: "Permutations II",
+          i: "Diberikan array yang mungkin berisi angka kembar, hasilkan semua permutasi unik.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n bilangan"],
+            ["Output", "Permutasi unik, satu per baris"],
+            ["Batas", "1 ≤ n ≤ 8"],
+            ["Contoh", "3\n1 1 2"],
+            ["Hasil", "1 1 2\n1 2 1\n2 1 1"],
+          ],
+          c: "Sort dulu, lalu pakai syarat i > 0 && a[i] == a[i-1] && !used[i-1].",
+        },
+      };
+
+      /* ============ 03 KADANE ============ */
+      M.kadane = {
+        bab: "Kadane",
+        no: "3",
+        judul: "Subarray Jumlah Maksimum",
+        sub: "Dua baris kode, satu keputusan: bawa terus, atau buang dan mulai baru.",
+        materi: [
+          {
+            h: "Satu pertanyaan di tiap posisi",
+            p: [
+              "Ada dua pilihan: <strong>lanjutkan</strong> subarray sebelumnya, atau <strong>mulai baru</strong> dari sini. Keduanya berakhir di posisi yang sama — bedanya cuma membawa bawaan atau tidak.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Yang perlu diingat",
+            p: [
+              "Kalau bawaan dari belakang merugikan, buang. Kalau tidak, bawa terus. Setiap lewat rekor, catat.",
+              "Dari kalimat itu kodenya bisa kamu tulis ulang sendiri.",
+            ],
+          },
+          {
+            h: "Dua variabel, dua tugas",
+            p: [
+              '<code class="c">cur</code> = jumlah terbaik yang <strong>berakhir tepat di posisi sekarang</strong>, boleh naik-turun. <code class="c">best</code> = rekor tertinggi, hanya bisa naik.',
+            ],
+          },
+          {
+            h: "Jebakan",
+            p: [
+              'Inisialisasi harus dari <code class="c">a[0]</code>, bukan 0. Kalau 0 dan semua elemen negatif, jawabanmu jadi 0 — padahal subarray tidak boleh kosong.',
+            ],
+          },
+        ],
+        kode: [
+          "ll cur = a[0], best = a[0];",
+          "",
+          "for (int i = 1; i < n; i++) {",
+          "    cur  = max(a[i], cur + a[i]);",
+          "    best = max(best, cur);",
+          "}",
+          "",
+          "cout << best;",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2, 3],
+            t: (v) =>
+              ["klasik", "semua negatif", "semua positif", "panjang"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            [-2, 1, -3, 4, -1, 2, 1, -5, 4],
+            [-5, -2, -9],
+            [1, 2, 3, 4],
+            [3, -1, 4, -8, 2, 3, -10, 5, 6, -17, 20],
+          ];
+          const A = SET[I.set],
+            S = [];
+          let cur = A[0],
+            best = A[0],
+            cs = 0,
+            bs = 0,
+            be = 0;
+          S.push({
+            ln: [1],
+            tag: "mulai",
+            d: `cur dan best diisi elemen pertama, yaitu <b>${A[0]}</b>.`,
+            A,
+            cur,
+            best,
+            cs: 0,
+            ce: 0,
+            bs: 0,
+            be: 0,
+            i: 0,
+            ck: null,
+          });
+          for (let i = 1; i < A.length; i++) {
+            const lj = cur + A[i],
+              br = A[i],
+              rs = br > lj,
+              lama = cur;
+            S.push({
+              ln: [4],
+              tag: "cek",
+              d: `Di a[${i}]=${A[i]}: bandingkan lanjut dengan mulai baru.`,
+              A,
+              cur,
+              best,
+              cs,
+              ce: i - 1,
+              bs,
+              be,
+              i,
+              ck: { lj, br, rs, lama, ai: A[i] },
+            });
+            cur = rs ? br : lj;
+            if (rs) cs = i;
+            const rk = cur > best;
+            if (rk) {
+              best = cur;
+              bs = cs;
+              be = i;
+            }
+            S.push({
+              ln: [4, 5],
+              tag: rk ? "rekor" : rs ? "buang" : "tetap",
+              d: rs
+                ? `Bawaan lama (${lama}) negatif — buang, mulai baru. cur = ${cur}.`
+                : `Bawaan masih berguna — lanjutkan. cur = ${cur}.` +
+                  (rk ? ` Rekor baru: <b>${best}</b>.` : ""),
+              A,
+              cur,
+              best,
+              cs,
+              ce: i,
+              bs,
+              be,
+              i,
+              ck: null,
+            });
+          }
+          S.push({
+            ln: [8],
+            tag: "selesai",
+            d: `Selesai. Jumlah maksimum <b>${best}</b>, dari indeks ${bs} sampai ${be}.`,
+            A,
+            cur,
+            best,
+            cs,
+            ce: A.length - 1,
+            bs,
+            be,
+            i: null,
+            ck: null,
+            end: { v: best, bs, be, sub: A.slice(bs, be + 1).join(" ") },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Array — ungu = subarray berjalan · hijau = rekor tersimpan",
+            `<div class="row">${s.A.map((v, k) => {
+              const iB = k >= s.bs && k <= s.be,
+                iC = s.i !== null && k >= s.cs && k <= s.ce && k <= s.i;
+              let c = "";
+              if (iC) c = "s";
+              if (iB) c = "h";
+              if (s.i === k) c = "a";
+              if (s.i !== null && k > s.i) c += " dim";
+              return cl(v, { i: k, c });
+            }).join("")}</div>`,
+          );
+          if (s.ck)
+            h += hg(
+              `Dua pilihan di a[${s.i}]`,
+              [
+                {
+                  l: "lanjutkan",
+                  e: `${s.ck.lama} + (${s.ck.ai})`,
+                  v: s.ck.lj,
+                  win: !s.ck.rs,
+                  lose: s.ck.rs,
+                },
+                {
+                  l: "mulai baru",
+                  e: `a[${s.i}]`,
+                  v: s.ck.br,
+                  win: s.ck.rs,
+                  lose: !s.ck.rs,
+                },
+              ],
+              {
+                j: s.ck.rs ? "no" : "ok",
+                t: s.ck.rs
+                  ? "yang lebih besar: mulai baru"
+                  : "yang lebih besar: lanjutkan",
+              },
+            );
+          return h;
+        },
+        kanan(s) {
+          return pn(
+            "Dua variabel",
+            `<div class="row">${cl(s.cur, { u: "cur", c: "s" })}${cl(s.best, { u: "best", c: "h" })}</div>
+  <p style="font-size:13px;color:var(--pudar);margin-top:14px;line-height:1.55">cur boleh naik-turun.<br>best hanya bisa naik.</p>`,
+          );
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v,
+                `Subarray: ${s.end.sub} · indeks ${s.end.bs} sampai ${s.end.be}`,
+              )
+            : "";
+        },
+        tests: [
+          ["9\n-2 1 -3 4 -1 2 1 -5 4", "6", "kasus klasik"],
+          ["3\n-5 -2 -9", "-2", "semua negatif", 1],
+          ["3\n1 2 3", "6", "semua positif"],
+          ["1\n-7", "-7", "satu elemen", 1],
+          ["11\n3 -1 4 -8 2 3 -10 5 6 -17 20", "20", "elemen besar di ujung"],
+        ],
+        soal: {
+          j: "Maximum Subarray Sum",
+          i: "Cari subarray kontigu tidak kosong dengan jumlah terbesar.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n bilangan"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 2·10⁵, |a[i]| ≤ 10⁹"],
+            ["Contoh", "9\n-2 1 -3 4 -1 2 1 -5 4"],
+            ["Hasil", "6"],
+          ],
+          c: "Pakai long long. Inisialisasi dari a[0], bukan 0.",
+        },
+      };
+
+      /* ============ 04 KADANE MELINGKAR ============ */
+      M.circ = {
+        bab: "Kadane",
+        no: "4",
+        judul: "Subarray Melingkar",
+        sub: "Kalau yang dicari susah dihitung, hitung kebalikannya lalu kurangkan dari total.",
+        materi: [
+          {
+            h: "Dua bentuk jawaban",
+            p: [
+              "<strong>Tidak membungkus</strong> — subarray biasa, itu Kadane polos. <strong>Membungkus</strong> — melewati ujung, menyambung dari akhir ke awal. Tidak ada bentuk ketiga.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa dikurangkan",
+            p: [
+              "Bagian yang membungkus terpecah di dua ujung — Kadane tidak bisa melacaknya. Tapi bagian yang <strong>tidak</strong> diambil selalu satu potongan utuh di tengah, dan itu bisa dilacak.",
+              "Cari yang gampang, lalu kurangkan dari total. Supaya sisanya maksimum, yang dibuang harus minimum.",
+            ],
+          },
+          {
+            h: "Lubangnya",
+            p: [
+              'Kalau semua elemen negatif, Kadane minimum mengambil seluruh array — maka <code class="c">total − worst</code> jadi nol, yang berarti subarray kosong. Penjaga <code class="c">best &lt; 0</code> menolaknya.',
+            ],
+          },
+        ],
+        kode: [
+          "ll total=a[0], curMax=a[0], best=a[0];",
+          "ll curMin=a[0], worst=a[0];",
+          "",
+          "for (int i = 1; i < n; i++) {",
+          "    total += a[i];",
+          "    curMax = max(a[i], curMax+a[i]);  best  = max(best, curMax);",
+          "    curMin = min(a[i], curMin+a[i]);  worst = min(worst, curMin);",
+          "}",
+          "",
+          "if (best < 0) cout << best;",
+          "else cout << max(best, total - worst);",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2, 3],
+            t: (v) => ["5 -3 5", "semua negatif", "11 elemen", "tanpa 20"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            [5, -3, 5],
+            [-3, -2, -5],
+            [3, -1, 4, -8, 2, 3, -10, 5, 6, -17, 20],
+            [3, -1, 4, -8, 2, 3, -10, 5, 6, -17],
+          ];
+          const A = SET[I.set],
+            S = [];
+          let tt = A[0],
+            cx = A[0],
+            bs2 = A[0],
+            cn = A[0],
+            wr = A[0];
+          let cms = 0,
+            bs = 0,
+            be = 0,
+            cns = 0,
+            ws = 0,
+            we = 0;
+          S.push({
+            ln: [1, 2],
+            tag: "mulai",
+            d: `Semua variabel diisi a[0] = <b>${A[0]}</b>. Dua Kadane berjalan bersamaan.`,
+            A,
+            tt,
+            best: bs2,
+            worst: wr,
+            bs,
+            be,
+            ws,
+            we,
+            i: 0,
+            ck: null,
+          });
+          for (let i = 1; i < A.length; i++) {
+            tt += A[i];
+            const g1 = cx + A[i],
+              r1 = A[i] > g1;
+            cx = r1 ? A[i] : g1;
+            if (r1) cms = i;
+            const rk = cx > bs2;
+            if (rk) {
+              bs2 = cx;
+              bs = cms;
+              be = i;
+            }
+            S.push({
+              ln: [6],
+              tag: rk ? "rekor" : "cek",
+              d:
+                `MAKS di a[${i}]=${A[i]}: ${r1 ? "mulai baru" : "gabung"} → curMax = ${cx}.` +
+                (rk ? ` Rekor maks ${bs2}.` : ""),
+              A,
+              tt,
+              best: bs2,
+              worst: wr,
+              bs,
+              be,
+              ws,
+              we,
+              i,
+              ck: { min: 0, g: g1, s: A[i], r: r1 },
+            });
+            const g2 = cn + A[i],
+              r2 = A[i] < g2;
+            cn = r2 ? A[i] : g2;
+            if (r2) cns = i;
+            const wk = cn < wr;
+            if (wk) {
+              wr = cn;
+              ws = cns;
+              we = i;
+            }
+            S.push({
+              ln: [7],
+              tag: wk ? "buang" : "cek",
+              d:
+                `MIN di a[${i}]=${A[i]}: ${r2 ? "mulai baru" : "gabung"} → curMin = ${cn}.` +
+                (wk ? ` Rekor min ${wr}, blok ${we - ws + 1} elemen.` : ""),
+              A,
+              tt,
+              best: bs2,
+              worst: wr,
+              bs,
+              be,
+              ws,
+              we,
+              i,
+              ck: { min: 1, g: g2, s: A[i], r: r2 },
+            });
+          }
+          const wp = tt - wr,
+            ng = bs2 < 0,
+            ans = ng ? bs2 : Math.max(bs2, wp);
+          S.push({
+            ln: [10, 11],
+            tag: ng ? "pangkas" : "cek",
+            d: ng
+              ? `best = ${bs2} &lt; 0 → semua negatif. Rumus melingkar memberi ${wp}, artinya subarray kosong — tidak sah.`
+              : `Blok terkecil ${wr} di indeks ${ws}..${we}. Buang → sisanya ${tt} − (${wr}) = <b>${wp}</b>.`,
+            A,
+            tt,
+            best: bs2,
+            worst: wr,
+            bs,
+            be,
+            ws,
+            we,
+            i: null,
+            ck: null,
+            bd: { best: bs2, wp, ng },
+          });
+          S.push({
+            ln: [ng ? 10 : 11],
+            tag: "selesai",
+            d: `Jawaban akhir <b>${ans}</b>.`,
+            A,
+            tt,
+            best: bs2,
+            worst: wr,
+            bs,
+            be,
+            ws,
+            we,
+            i: null,
+            ck: null,
+            bd: { best: bs2, wp, ng },
+            end: { v: ans, ng },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Array — hijau = blok maks · merah = blok min (dibuang)",
+            `<div class="row">${s.A.map((v, k) => {
+              const iB = k >= s.bs && k <= s.be,
+                iW = k >= s.ws && k <= s.we;
+              let c = "";
+              if (iB) c = "h";
+              if (iW) c = "b";
+              if (s.i === k) c = "a";
+              if (s.i !== null && k > s.i) c += " dim";
+              return cl(v, {
+                i: k,
+                u: (iB ? "mx" : "") + (iW ? (iB ? "/mn" : "mn") : ""),
+                c,
+              });
+            }).join("")}</div>`,
+          );
+          if (s.ck)
+            h += hg(
+              `Kadane ${s.ck.min ? "MIN — pilih terkecil" : "MAKS — pilih terbesar"}`,
+              [
+                {
+                  l: "gabung dengan bawaan",
+                  v: s.ck.g,
+                  win: !s.ck.r,
+                  lose: s.ck.r,
+                },
+                { l: "mulai baru", v: s.ck.s, win: s.ck.r, lose: !s.ck.r },
+              ],
+            );
+          return h;
+        },
+        kanan(s) {
+          let h = pn(
+            "Tiga angka yang dilacak",
+            `<div class="row">${cl(s.best, { u: "best", c: "h" })}${cl(s.worst, { u: "worst", c: "b" })}${cl(s.tt, { u: "total", c: "s" })}</div>`,
+          );
+          if (s.bd)
+            h += hg(
+              "Dua kandidat",
+              [
+                {
+                  l: "A · tidak melingkar",
+                  e: "best",
+                  v: s.bd.best,
+                  win: s.bd.ng || s.bd.best >= s.bd.wp,
+                },
+                {
+                  l: "B · melingkar",
+                  e: "total − worst",
+                  v: s.bd.wp,
+                  win: !s.bd.ng && s.bd.wp > s.bd.best,
+                  lose: s.bd.ng,
+                },
+              ],
+              s.bd.ng
+                ? { j: "no", t: "B berarti subarray kosong — ditolak" }
+                : {
+                    j: "ok",
+                    t: `max(${s.bd.best}, ${s.bd.wp}) = ${Math.max(s.bd.best, s.bd.wp)}`,
+                  },
+            );
+          return h;
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v,
+                s.end.ng
+                  ? "Semua elemen negatif — rumus melingkar ditolak."
+                  : "Bentuk yang menang ditandai di panel dua kandidat.",
+              )
+            : "";
+        },
+        tests: [
+          ["3\n5 -3 5", "10", "melingkar menang"],
+          ["3\n-3 -2 -5", "-2", "lubang — rumus beri 0", 1],
+          ["5\n1 -2 3 -2 5", "7", "melingkar menang"],
+          ["11\n3 -1 4 -8 2 3 -10 5 6 -17 20", "26", "blok min 7 elemen"],
+          ["10\n3 -1 4 -8 2 3 -10 5 6 -17", "11", "tanpa 20 → best menang", 1],
+          ["4\n4 2 7 1", "14", "semua positif"],
+        ],
+        soal: {
+          j: "Maximum Sum Circular Subarray",
+          i: "Array melingkar: setelah elemen terakhir, kembali ke elemen pertama. Cari subarray tidak kosong dengan jumlah maksimum.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n bilangan"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 2·10⁵"],
+            ["Contoh", "3\n5 -3 5"],
+            ["Hasil", "10"],
+          ],
+          c: "max(best, total − worst), dengan penjaga: kalau best < 0, pakai best saja.",
+        },
+      };
+
+      /* ============ 05 MONOTONIC STACK ============ */
+      M.mono = {
+        bab: "Monotonic Stack",
+        no: "5",
+        judul: "Empat Varian",
+        sub: "Arah loop menentukan prev atau next. Tanda pembanding menentukan greater atau smaller.",
+        materi: [
+          {
+            h: "Bedanya dengan prefix max",
+            p: [
+              '<strong>Prefix max</strong> menjawab "berapa nilai tertinggi di kiri". <strong>Monotonic stack</strong> menjawab "siapa yang pertama lebih besar di kiri".',
+              'Untuk <code class="c">5 4 1 3 2</code>, di posisi 4 prefix max menjawab 5, tapi yang pertama ditemui saat menoleh ke kiri adalah 3.',
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa stack selalu terurut",
+            p: [
+              "Yang lebih kecil <strong>dan</strong> lebih jauh tidak pernah berguna lagi — dia kalah dalam dua hal sekaligus.",
+              "Sifat menurun muncul sendiri dari aturan pembuangan. Kita tidak pernah mengurutkannya.",
+            ],
+          },
+          {
+            h: "Kenapa O(n)",
+            p: [
+              "Tiap elemen masuk stack tepat sekali dan keluar maksimal sekali. Total push + pop tidak pernah melebihi 2n.",
+            ],
+          },
+          {
+            h: "Kenapa isinya indeks",
+            p: [
+              'Dari indeks kamu selalu bisa dapat nilai lewat <code class="c">a[i]</code>. Dari nilai kamu tidak bisa dapat indeks.',
+            ],
+          },
+        ],
+        kode: [
+          "vector<int> res(n, -1);",
+          "stack<int> st;                  // isinya INDEKS",
+          "",
+          "for (int i = 0; i < n; i++) {",
+          "    while (!st.empty() && a[st.top()] <= a[i])",
+          "        st.pop();",
+          "",
+          "    if (!st.empty()) res[i] = a[st.top()];",
+          "    st.push(i);",
+          "}",
+        ],
+        opsi: [
+          {
+            k: "v",
+            l: "varian",
+            p: [0, 1, 2, 3],
+            t: (v) =>
+              ["prev greater", "prev smaller", "next greater", "next smaller"][
+                v
+              ],
+          },
+        ],
+        inp: { v: 0 },
+        build(I) {
+          const A = [4, 2, 5, 1, 3],
+            n = 5,
+            S = [];
+          const V = [
+            { m: 1, g: 1 },
+            { m: 1, g: 0 },
+            { m: 0, g: 1 },
+            { m: 0, g: 0 },
+          ][I.v];
+          const nm = [
+            "prev greater",
+            "prev smaller",
+            "next greater",
+            "next smaller",
+          ][I.v];
+          const st = [],
+            res = [],
+            ur = [];
+          if (V.m) for (let i = 0; i < n; i++) ur.push(i);
+          else for (let i = n - 1; i >= 0; i--) ur.push(i);
+          S.push({
+            ln: [1, 2],
+            tag: "mulai",
+            d: `Varian <b>${nm}</b>. Loop ${V.m ? "maju (kiri→kanan)" : "mundur (kanan→kiri)"}, jadi stack berisi elemen di sebelah ${V.m ? "kiri" : "kanan"}.`,
+            A,
+            st: [],
+            res: res.slice(),
+            i: null,
+            ck: null,
+            V,
+          });
+          for (const i of ur) {
+            S.push({
+              ln: [4, 5],
+              tag: "cek",
+              d: `Di indeks ${i} (nilai ${A[i]}). Bersihkan kandidat yang tidak berguna.`,
+              A,
+              st: st.slice(),
+              res: res.slice(),
+              i,
+              ck: null,
+              V,
+            });
+            while (
+              st.length &&
+              (V.g
+                ? A[st[st.length - 1]] <= A[i]
+                : A[st[st.length - 1]] >= A[i])
+            ) {
+              const t = st[st.length - 1];
+              S.push({
+                ln: [5, 6],
+                tag: "buang",
+                d: `Puncak bernilai ${A[t]}. Karena ${A[t]} ${V.g ? "≤" : "≥"} ${A[i]}, dia lebih ${V.g ? "kecil" : "besar"} <b>dan</b> lebih jauh — buang.`,
+                A,
+                st: st.slice(),
+                res: res.slice(),
+                i,
+                sor: t,
+                ck: { a: A[t], b: A[i], op: V.g ? "≤" : "≥", ok: 1 },
+                V,
+              });
+              st.pop();
+            }
+            res[i] = st.length ? A[st[st.length - 1]] : -1;
+            S.push({
+              ln: [8],
+              tag: "jawab",
+              d: st.length
+                ? `Puncak bernilai ${A[st[st.length - 1]]} — dialah jawaban untuk indeks ${i}.`
+                : `Stack kosong — tidak ada yang memenuhi. Jawabannya −1.`,
+              A,
+              st: st.slice(),
+              res: res.slice(),
+              i,
+              ck: st.length
+                ? {
+                    a: A[st[st.length - 1]],
+                    b: A[i],
+                    op: V.g ? "≤" : "≥",
+                    ok: 0,
+                  }
+                : null,
+              V,
+            });
+            st.push(i);
+            S.push({
+              ln: [9],
+              tag: "masuk",
+              d: `Dorong indeks ${i} ke stack — kandidat untuk elemen berikutnya.`,
+              A,
+              st: st.slice(),
+              res: res.slice(),
+              i,
+              ck: null,
+              V,
+            });
+          }
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Stack ${V.g ? "menurun" : "menaik"} dari bawah ke atas — muncul sendiri.`,
+            A,
+            st: st.slice(),
+            res: res.slice(),
+            i: null,
+            ck: null,
+            V,
+            end: { v: res.map((x) => (x === -1 ? "−1" : x)).join("  ") },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Array — ungu di stack · merah sedang dibuang · angka bawah = jawaban",
+            `<div class="row">${s.A.map((v, k) => {
+              let c = "";
+              if (s.st.indexOf(k) >= 0) c = "s";
+              if (s.sor === k) c = "b";
+              if (s.i === k) c = "a";
+              const r = s.res[k];
+              return cl(v, {
+                i: k,
+                u: r !== undefined ? (r === -1 ? "−1" : r) : "",
+                c,
+              });
+            }).join("")}</div>`,
+          );
+          if (s.ck)
+            h += hg(
+              "Syarat buang",
+              [
+                { l: "puncak stack", v: s.ck.a },
+                {
+                  l: `apakah ${s.ck.a} ${s.ck.op} ${s.ck.b} ?`,
+                  v: s.ck.ok ? "true" : "false",
+                  win: !s.ck.ok,
+                },
+              ],
+              {
+                j: s.ck.ok ? "no" : "ok",
+                t: s.ck.ok
+                  ? "syarat terpenuhi → pop"
+                  : "syarat gagal → puncak inilah jawabannya",
+              },
+            );
+          return h;
+        },
+        kanan(s) {
+          let h = pn(
+            "Stack",
+            stk(
+              s.st,
+              (x) =>
+                `<span>indeks ${x}</span><span style="font-weight:700">${s.A[x]}</span>`,
+            ),
+          );
+          if (s.st.length > 1)
+            h += `<p style="font-size:13px;color:var(--pudar);margin:-6px 0 14px;padding-left:2px">Nilainya selalu ${s.V.g ? "menurun" : "menaik"} dari bawah ke atas.</p>`;
+          return h;
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v,
+                "Hasil untuk tiap indeks. −1 berarti tidak ada yang memenuhi.",
+              )
+            : "";
+        },
+        tests: [
+          ["prev greater\n6\n5 3 8 2 7 1", "-1 5 -1 8 8 7", ""],
+          ["prev smaller (indeks)\n6\n6 2 5 4 5 1", "-1 -1 1 1 3 -1", ""],
+          ["prev smaller\n5\n4 4 4 4 4", "-1 -1 -1 -1 -1", "kembar", 1],
+          ["next smaller\n6\n4 8 5 2 25 6", "2 5 2 -1 6 -1", ""],
+          [
+            "next greater jarak\n6\n73 74 75 71 69 72",
+            "1 1 0 2 1 0",
+            "Daily Temperatures",
+          ],
+          [
+            "next greater jarak\n4\n30 30 30 30",
+            "0 0 0 0",
+            "kembar — pakai < tegas",
+            1,
+          ],
+        ],
+        soal: {
+          j: "Daily Temperatures",
+          i: "Diberikan N suhu harian. Untuk setiap hari, tentukan berapa hari lagi sampai muncul hari dengan suhu lebih tinggi. Jika tidak ada, cetak 0.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n suhu"],
+            ["Output", "n bilangan dipisah spasi"],
+            ["Batas", "1 ≤ n ≤ 2·10⁵"],
+            ["Contoh", "6\n73 74 75 71 69 72"],
+            ["Hasil", "1 1 0 2 1 0"],
+          ],
+          c: "Simpan indeks di stack — kamu butuh selisih posisi. Suhu yang sama tidak dihitung lebih tinggi.",
+        },
+      };
+
+      /* ============ 06 TRAPPING RAIN WATER ============ */
+      M.air = {
+        bab: "Monotonic Stack",
+        no: "6",
+        judul: "Trapping Rain Water",
+        sub: "Air terisi mendatar lapis demi lapis. Tiga tembok berperan setiap kali satu lapis terbentuk.",
+        materi: [
+          {
+            h: "Aturan airnya",
+            p: [
+              "Air menggenang kalau ada tembok lebih tinggi di kiri <strong>dan</strong> di kanan. Tingginya mengikuti dinding yang <strong>lebih pendek</strong>, karena air meluber lewat sisi rendah.",
+              "Ujung kiri dan kanan array tidak pernah menampung air.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Tiga peran saat pop",
+            p: [
+              "Yang di-pop jadi <strong>lantai</strong>. Puncak stack setelahnya jadi <strong>dinding kiri</strong>. Tembok yang baru datang jadi <strong>dinding kanan</strong>.",
+              "Karena stack menurun, dinding kiri dijamin lebih tinggi dari lantai. Cekungan otomatis terbentuk.",
+            ],
+          },
+          {
+            h: "Jebakan kurung",
+            p: [
+              'Tulis <code class="c">min(h[kiri], h[i]) - h[dasar]</code>, bukan <code class="c">min(h[kiri], h[i] - h[dasar])</code>. Cari batas air dulu, baru kurangi lantai.',
+            ],
+          },
+          {
+            h: "Ada cara lebih mudah",
+            p: [
+              "Prefix max menyelesaikan soal ini sama cepat dan lebih mudah ditulis. Monotonic stack baru tak tergantikan di soal seperti Largest Rectangle in Histogram.",
+            ],
+          },
+        ],
+        kode: [
+          "stack<int> st;  ll total = 0;",
+          "",
+          "for (int i = 0; i < n; i++) {",
+          "    while (!st.empty() && h[st.top()] < h[i]) {",
+          "        int dasar = st.top();  st.pop();",
+          "        if (st.empty()) break;",
+          "",
+          "        int kiri   = st.top();",
+          "        int lebar  = i - kiri - 1;",
+          "        int tinggi = min(h[kiri], h[i]) - h[dasar];",
+          "        total += lebar * tinggi;",
+          "    }",
+          "    st.push(i);",
+          "}",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2, 3],
+            t: (v) => ["3 0 2 0 4", "LeetCode", "menurun", "kembar"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            [3, 0, 2, 0, 4],
+            [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1],
+            [5, 4, 3, 2, 1],
+            [4, 2, 2, 5],
+          ];
+          const H = SET[I.set],
+            n = H.length,
+            S = [],
+            w = new Array(n).fill(0),
+            st = [];
+          let tot = 0,
+            lp = 0;
+          S.push({
+            ln: [1],
+            tag: "mulai",
+            d: "Stack kosong. Selama tembok menurun, belum ada air — air butuh dinding di kedua sisi.",
+            H,
+            st: [],
+            w: w.slice(),
+            tot,
+            i: null,
+            ck: null,
+          });
+          for (let i = 0; i < n; i++) {
+            S.push({
+              ln: [3, 4],
+              tag: "cek",
+              d: `Tembok ${i} tingginya ${H[i]}. Lebih tinggi dari puncak stack?`,
+              H,
+              st: st.slice(),
+              w: w.slice(),
+              tot,
+              i,
+              ck: null,
+            });
+            while (st.length && H[st[st.length - 1]] < H[i]) {
+              const d = st.pop();
+              if (!st.length) {
+                S.push({
+                  ln: [5, 6],
+                  tag: "buang",
+                  d: `Tembok ${d} keluar tapi stack kosong — tidak ada dinding kiri, air tumpah.`,
+                  H,
+                  st: st.slice(),
+                  w: w.slice(),
+                  tot,
+                  i,
+                  ds: d,
+                  ck: null,
+                });
+                break;
+              }
+              const ki = st[st.length - 1],
+                lb = i - ki - 1,
+                tg = Math.min(H[ki], H[i]) - H[d],
+                ls = lb * tg;
+              for (let k = ki + 1; k < i; k++)
+                w[k] = Math.max(w[k], Math.min(H[ki], H[i]) - H[k]);
+              tot += ls;
+              if (ls > 0) lp++;
+              S.push({
+                ln: [5, 8, 9, 10, 11],
+                tag: ls > 0 ? "ambil" : "tetap",
+                d:
+                  ls > 0
+                    ? `Cekungan tertutup. Lantai ${d}, dinding kiri ${ki}, dinding kanan ${i}. Air bertambah ${ls}.`
+                    : `Perhitungan jalan tapi nol — lantai dan dinding kiri sama tinggi.`,
+                H,
+                st: st.slice(),
+                w: w.slice(),
+                tot,
+                i,
+                ds: d,
+                ki,
+                ka: i,
+                ck: {
+                  lb,
+                  elb: `${i} − ${ki} − 1`,
+                  bt: Math.min(H[ki], H[i]),
+                  ebt: `min(${H[ki]}, ${H[i]})`,
+                  tg,
+                  etg: `batas − ${H[d]}`,
+                  ls,
+                  els: `${lb} × ${tg}`,
+                },
+              });
+            }
+            st.push(i);
+            S.push({
+              ln: [13],
+              tag: "masuk",
+              d: `Dorong tembok ${i} ke stack.`,
+              H,
+              st: st.slice(),
+              w: w.slice(),
+              tot,
+              i,
+              ck: null,
+            });
+          }
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Total air <b>${tot}</b>${lp ? `, dari ${lp} lapis mendatar.` : "."}`,
+            H,
+            st: st.slice(),
+            w: w.slice(),
+            tot,
+            i: null,
+            ck: null,
+            end: { v: tot, lp },
+          });
+          return S;
+        },
+        kiri(s) {
+          const n = s.H.length,
+            W = 440,
+            mx = Math.max(...s.H, 1);
+          const cw = (W - 16) / n,
+            gap = Math.min(7, cw * 0.18),
+            uh = Math.min(34, 140 / mx),
+            top = 16,
+            H0 = top + mx * uh + 30;
+          let c = "";
+          for (let k = 0; k < n; k++) {
+            const x = 8 + k * cw,
+              bw = cw - gap,
+              wt = s.w[k] || 0;
+            if (wt > 0) {
+              const wy = top + (mx - s.H[k] - wt) * uh,
+                wh = wt * uh;
+              c += `<rect x="${x}" y="${wy}" width="${bw}" height="${wh}" fill="#9CC8DE" rx="2"/>`;
+              if (bw > 22 && wh > 14)
+                c += `<text x="${x + bw / 2}" y="${wy + wh / 2 + 4}" text-anchor="middle" font-size="11" fill="#1B4356">${wt}</text>`;
+            }
+            if (s.H[k] > 0) {
+              const by = top + (mx - s.H[k]) * uh,
+                bh = s.H[k] * uh;
+              let f = "#C9CEC9";
+              if (s.st.indexOf(k) >= 0) f = "#B9B6DE";
+              if (s.ki === k || s.ka === k) f = "#8FC9AE";
+              if (s.ds === k) f = "#E0A9A4";
+              if (s.i === k && s.ka !== k) f = "#EBC97A";
+              c += `<rect x="${x}" y="${by}" width="${bw}" height="${bh}" rx="2" fill="${f}"/>`;
+              if (bw > 18)
+                c += `<text x="${x + bw / 2}" y="${by + Math.min(bh / 2 + 4, 18)}" text-anchor="middle" font-size="11" fill="#2B3238">${s.H[k]}</text>`;
+            }
+            c += `<text x="${x + bw / 2}" y="${top + mx * uh + 13}" text-anchor="middle" font-size="9" fill="#8B959D">${k}</text>`;
+            const lb =
+              s.ds === k
+                ? "lantai"
+                : s.ki === k
+                  ? "kiri"
+                  : s.ka === k
+                    ? "kanan"
+                    : "";
+            if (lb)
+              c += `<text x="${x + bw / 2}" y="${top + mx * uh + 25}" text-anchor="middle" font-size="8.5" fill="${lb === "lantai" ? "#9A3838" : "#0B6046"}">${lb}</text>`;
+          }
+          c += `<line x1="8" y1="${top + mx * uh}" x2="${8 + n * cw - gap}" y2="${top + mx * uh}" stroke="#D2D5D1" stroke-width="1.5"/>`;
+          let h = pn(
+            "Tembok dan air",
+            `<svg width="100%" viewBox="0 0 ${W} ${H0}" role="img"><title>Tembok dan genangan</title><desc>Batang mewakili tembok, biru mewakili air.</desc>${c}</svg>`,
+          );
+          if (s.ck)
+            h += hg("Hitung satu lapis", [
+              { l: "lebar antar dinding", e: s.ck.elb, v: s.ck.lb },
+              { l: "batas air (yang pendek)", e: s.ck.ebt, v: s.ck.bt },
+              { l: "dikurangi tinggi lantai", e: s.ck.etg, v: s.ck.tg },
+              { l: "air lapis ini", e: s.ck.els, v: s.ck.ls, win: s.ck.ls > 0 },
+            ]);
+          return h;
+        },
+        kanan(s) {
+          let h = pn(
+            "Stack",
+            stk(
+              s.st,
+              (x) =>
+                `<span>tembok ${x}</span><span style="font-weight:700">${s.H[x]}</span>`,
+            ),
+          );
+          h += pn(
+            "Total air",
+            `<div class="row">${cl(s.tot, { c: "h" })}</div>`,
+          );
+          return h;
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v,
+                s.end.lp
+                  ? `Terbentuk dari ${s.end.lp} lapis mendatar.`
+                  : "Tidak ada cekungan yang tertutup.",
+              )
+            : "";
+        },
+        tests: [
+          ["12\n0 1 0 2 1 0 1 3 2 1 2 1", "6", "kasus LeetCode"],
+          ["5\n3 0 2 0 4", "7", "dua lapis"],
+          ["5\n5 4 3 2 1", "0", "menurun", 1],
+          ["5\n1 2 3 4 5", "0", "menaik, air tumpah", 1],
+          ["1\n5", "0", "satu tembok", 1],
+          ["2\n3 7", "0", "butuh minimal 3", 1],
+          ["6\n4 2 0 3 2 5", "9", "lembah dalam"],
+          ["4\n4 4 4 4", "0", "semua sama", 1],
+          ["7\n5 0 5 0 5 0 5", "15", "tiga cekungan"],
+          ["4\n4 2 2 5", "4", "kembar bersebelahan", 1],
+          ["6\n9 1 1 1 1 9", "32", "lembah panjang"],
+        ],
+        soal: {
+          j: "Trapping Rain Water",
+          i: "Diberikan N tinggi tembok dengan lebar masing-masing 1. Setelah hujan, hitung total air yang tertampung.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n tinggi"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "0 ≤ n ≤ 2·10⁴"],
+            ["Contoh", "12\n0 1 0 2 1 0 1 3 2 1 2 1"],
+            ["Hasil", "6"],
+          ],
+          c: "Tiga cara: prefix max (paling mudah), monotonic stack, dan two pointer (O(1) memori).",
+        },
+      };
+
+      /* ============ 07 FREKUENSI ============ */
+      M.freq = {
+        bab: "Array Frekuensi",
+        no: "7",
+        judul: "Hitung Pasangan Berselisih K",
+        sub: "Daripada mencari berulang-ulang, catat sekali lalu tinggal baca.",
+        materi: [
+          {
+            h: "Kotak, bukan pencarian",
+            p: [
+              'Cara polos membandingkan setiap pasangan — O(n²). Cara frekuensi menyiapkan kotak hitung: <code class="c">cnt[x]</code> berarti "berapa kali nilai x sudah lewat".',
+              "Untuk mencari pasangan kamu tidak bertanya ke elemen satu-satu — kamu bertanya ke kotak.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Urutan yang menentukan benar-salah",
+            p: [
+              "Hitung <strong>dulu</strong>, daftarkan <strong>kemudian</strong>. Kalau kamu mendaftarkan diri lebih dulu, kamu akan menemukan dirimu sendiri di kotak.",
+              "Dan karena tiap pasangan hanya dihitung saat elemen yang belakangan diproses, tidak ada yang dobel.",
+            ],
+          },
+          {
+            h: "Tiga jebakan",
+            p: [
+              '<strong>K = 0 harus dipisah</strong> — kalau tidak, <code class="c">x−0</code> dan <code class="c">x+0</code> menunjuk kotak yang sama dan tiap pasangan terhitung dua kali.',
+              '<strong>Indeks negatif</strong> — pasang penjaga sebelum mengakses <code class="c">cnt[x−K]</code>.',
+            ],
+          },
+        ],
+        kode: [
+          "long long hasil = 0;",
+          "",
+          "for (int x : a) {",
+          "    if (K == 0) hasil += cnt[x];",
+          "    else {",
+          "        if (x-K >= 0)   hasil += cnt[x-K];",
+          "        if (x+K < MAKS) hasil += cnt[x+K];",
+          "    }",
+          "    cnt[x]++;                          // SETELAH menghitung",
+          "}",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2],
+            t: (v) => ["K=2", "K=0 dua sama", "K=0 tiga sama"][v],
+          },
+          {
+            k: "fix",
+            l: "urutan",
+            p: [1, 0],
+            t: (v) => (v ? "hitung dulu" : "daftar dulu"),
+          },
+        ],
+        inp: { set: 0, fix: 1 },
+        build(I) {
+          const SET = [
+            [[1, 5, 3, 4, 2], 2],
+            [[7, 7], 0],
+            [[3, 3, 3], 0],
+          ];
+          const A = SET[I.set][0],
+            K = SET[I.set][1],
+            MX = 9,
+            S = [],
+            cnt = new Array(MX + 1).fill(0),
+            seen = [];
+          let hs2 = 0;
+          S.push({
+            ln: [1],
+            tag: "mulai",
+            d: `Semua kotak masih 0. K = <b>${K}</b>.`,
+            A,
+            K,
+            cnt: cnt.slice(),
+            hs: hs2,
+            seen: [],
+            i: null,
+            ck: null,
+          });
+          for (let i = 0; i < A.length; i++) {
+            const x = A[i];
+            if (!I.fix) {
+              cnt[x]++;
+              seen.push(i);
+              S.push({
+                ln: [9],
+                tag: "masuk",
+                d: `Daftarkan ${x} <b>dulu</b> → cnt[${x}] jadi ${cnt[x]}. (urutan salah)`,
+                A,
+                K,
+                cnt: cnt.slice(),
+                hs: hs2,
+                seen: seen.slice(),
+                i,
+                ck: null,
+              });
+            }
+            let rows = [],
+              tm = 0;
+            if (K === 0) {
+              tm = cnt[x];
+              rows.push({
+                l: `cari nilai ${x} (K=0)`,
+                e: `cnt[${x}]`,
+                v: cnt[x],
+              });
+            } else {
+              const lo = x - K,
+                hi = x + K,
+                c1 = lo >= 0 && lo <= MX ? cnt[lo] : 0,
+                c2 = hi >= 0 && hi <= MX ? cnt[hi] : 0;
+              tm = c1 + c2;
+              rows.push({ l: `${x} − ${K} = ${lo}`, e: `cnt[${lo}]`, v: c1 });
+              rows.push({ l: `${x} + ${K} = ${hi}`, e: `cnt[${hi}]`, v: c2 });
+            }
+            rows.push({ l: "tambah ke hasil", v: "+" + tm, win: tm > 0 });
+            hs2 += tm;
+            S.push({
+              ln: [4, 6, 7],
+              tag: tm > 0 ? "ambil" : "tetap",
+              d: `Lihat ${x}. Tanya kotak — dapat ${tm} pasangan. hasil = ${hs2}.`,
+              A,
+              K,
+              cnt: cnt.slice(),
+              hs: hs2,
+              seen: seen.slice(),
+              i,
+              ck: { rows, x },
+            });
+            if (I.fix) {
+              cnt[x]++;
+              seen.push(i);
+              S.push({
+                ln: [9],
+                tag: "masuk",
+                d: `Baru sekarang daftarkan ${x} → cnt[${x}] jadi ${cnt[x]}.`,
+                A,
+                K,
+                cnt: cnt.slice(),
+                hs: hs2,
+                seen: seen.slice(),
+                i,
+                ck: null,
+              });
+            }
+          }
+          let bn = 0;
+          for (let p = 0; p < A.length; p++)
+            for (let q = p + 1; q < A.length; q++)
+              if (Math.abs(A[p] - A[q]) === K) bn++;
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. hasil = <b>${hs2}</b>.`,
+            A,
+            K,
+            cnt: cnt.slice(),
+            hs: hs2,
+            seen: seen.slice(),
+            i: null,
+            ck: null,
+            end: { v: hs2, bn },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Array — ungu = sudah terdaftar",
+            `<div class="row">${s.A.map((v, k) => cl(v, { i: k, c: (s.i === k ? "a" : s.seen.indexOf(k) >= 0 ? "s" : "") + (s.i !== null && k > s.i ? " dim" : "") })).join("")}</div>`,
+          );
+          if (s.ck) h += hg(`Tanya kotak untuk x = ${s.ck.x}`, s.ck.rows);
+          return h;
+        },
+        kanan(s) {
+          let h = pn(
+            "cnt[] — kotak hitung",
+            `<div class="row">${s.cnt.map((c, v) => cl(c, { i: v, c: c > 0 ? "s" : "" })).join("")}</div>`,
+          );
+          h += pn("hasil", `<div class="row">${cl(s.hs, { c: "h" })}</div>`);
+          return h;
+        },
+        end(s) {
+          if (!s.end) return "";
+          const ok = s.end.v === s.end.bn;
+          return hs(
+            s.end.v,
+            ok
+              ? "Cocok dengan hitungan manual."
+              : `Seharusnya ${s.end.bn}. Urutan "daftar dulu" membuat tiap pasangan terhitung berlebih.`,
+            !ok,
+          );
+        },
+        tests: [
+          ["5 2\n1 5 3 4 2", "3", "kasus dasar"],
+          ["2 0\n7 7", "1", "K=0, jangan dobel", 1],
+          ["3 0\n3 3 3", "3", "K=0, tiga sama", 1],
+          ["4 2\n1 3 5 7", "3", "berderet"],
+          ["3 5\n1 2 3", "0", "tidak ada pasangan", 1],
+          ["4 0\n5 5 5 5", "6", "K=0, empat sama", 1],
+        ],
+        soal: {
+          j: "Count Pairs with Difference K",
+          i: "Hitung ada berapa pasangan (i, j) dengan i < j sehingga |a[i] − a[j]| = K.",
+          io: [
+            ["Input", "Baris 1: n K\nBaris 2: n bilangan"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 2·10⁵, 0 ≤ a[i] ≤ 10⁶"],
+            ["Contoh", "5 2\n1 5 3 4 2"],
+            ["Hasil", "3"],
+          ],
+          c: "Pisahkan kasus K = 0. Pasang penjaga indeks negatif. Hitung dulu, daftarkan kemudian.",
+        },
+      };
+
+      /* ============ 08 ACTIVITY SELECTION ============ */
+      M.acara = {
+        bab: "Greedy",
+        no: "8",
+        judul: "Pilih Acara Terbanyak",
+        sub: "Greedy yang bisa dibuktikan benar: selesai lebih cepat selalu menyisakan waktu lebih banyak.",
+        materi: [
+          {
+            h: "Aturannya",
+            p: [
+              "Urutkan acara berdasarkan <strong>jam selesai</strong>, lalu ambil acara pertama yang tidak bentrok dengan yang sudah diambil.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa greedy pasti benar",
+            p: [
+              "Selesai lebih cepat berarti sisa waktu lebih banyak, dan itu tidak pernah merugikan.",
+              "Bandingkan dengan mengurutkan berdasarkan jam mulai: acara yang mulai jam 0 tapi berlangsung 6 jam memakan seluruh harimu, dan tetap dihitung satu acara.",
+            ],
+          },
+          {
+            h: "Trik pair",
+            p: [
+              '<code class="c">a[i] = {e, s}</code> menaruh jam selesai di posisi pertama, karena <code class="c">sort</code> pada pair selalu melihat elemen pertama dulu.',
+            ],
+          },
+        ],
+        kode: [
+          "for (int i = 0; i < n; i++) {",
+          "    cin >> s >> e;",
+          "    a[i] = {e, s};              // selesai di depan",
+          "}",
+          "sort(a.begin(), a.end());",
+          "",
+          "int waktu = 0, jumlah = 0;",
+          "for (auto [e, s] : a)",
+          "    if (s >= waktu) {",
+          "        waktu = e;  jumlah++;",
+          "    }",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2],
+            t: (v) => ["4 acara", "acara panjang", "semua bentrok"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            [
+              [1, 4],
+              [3, 5],
+              [0, 6],
+              [5, 7],
+            ],
+            [
+              [1, 10],
+              [2, 3],
+              [4, 5],
+            ],
+            [
+              [0, 5],
+              [0, 5],
+              [0, 5],
+            ],
+          ];
+          const A = SET[I.set]
+            .map((x, k) => ({ s: x[0], e: x[1], nm: "Acara " + (k + 1) }))
+            .sort((p, q) => p.e - q.e);
+          const S = [],
+            pl = [],
+            tl = [];
+          let wk = 0,
+            jm = 0;
+          S.push({
+            ln: [5, 7],
+            tag: "mulai",
+            d: "Acara sudah diurutkan berdasarkan jam selesai. Waktu bebas dimulai jam 0.",
+            A,
+            wk,
+            jm,
+            pl: [],
+            tl: [],
+            k: null,
+            ck: null,
+          });
+          for (let k = 0; k < A.length; k++) {
+            const a = A[k],
+              bs = a.s >= wk;
+            S.push({
+              ln: [8, 9],
+              tag: "cek",
+              d: `${a.nm} jam ${a.s}–${a.e}. Aku bebas jam ${wk}. Apakah acara ini mulai setelah itu?`,
+              A,
+              wk,
+              jm,
+              pl: pl.slice(),
+              tl: tl.slice(),
+              k,
+              ck: { s: a.s, w: wk, ok: bs },
+            });
+            if (bs) {
+              pl.push(k);
+              wk = a.e;
+              jm++;
+              S.push({
+                ln: [10],
+                tag: "ambil",
+                d: `Ikut ${a.nm}. Sibuk sampai jam ${a.e} — geser waktu bebas ke situ.`,
+                A,
+                wk,
+                jm,
+                pl: pl.slice(),
+                tl: tl.slice(),
+                k,
+                ck: null,
+              });
+            } else {
+              tl.push(k);
+              S.push({
+                ln: [9],
+                tag: "lewat",
+                d: `Bentrok — mulai jam ${a.s} padahal aku baru bebas jam ${wk}. Lewati.`,
+                A,
+                wk,
+                jm,
+                pl: pl.slice(),
+                tl: tl.slice(),
+                k,
+                ck: null,
+              });
+            }
+          }
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Bisa ikut <b>${jm}</b> acara.`,
+            A,
+            wk,
+            jm,
+            pl: pl.slice(),
+            tl: tl.slice(),
+            k: null,
+            ck: null,
+            end: { v: jm, nm: pl.map((i) => A[i].nm).join(" → ") },
+          });
+          return S;
+        },
+        kiri(s) {
+          const W = 430,
+            rh = 28,
+            mt = Math.max(...s.A.map((a) => a.e)) + 1,
+            ux = (W - 84) / mt,
+            H0 = s.A.length * rh + 30;
+          let c = "";
+          for (let t = 0; t <= mt; t++) {
+            c += `<line x1="${76 + t * ux}" y1="14" x2="${76 + t * ux}" y2="${H0 - 14}" stroke="#EAECE9" stroke-width="1"/>`;
+            c += `<text x="${76 + t * ux}" y="10" text-anchor="middle" font-size="8.5" fill="#8B959D">${t}</text>`;
+          }
+          s.A.forEach((a, k) => {
+            const y = 18 + k * rh,
+              dp = s.pl.indexOf(k) >= 0,
+              tp = s.tl.indexOf(k) >= 0,
+              ak = s.k === k;
+            const f = dp
+              ? "#8FC9AE"
+              : ak
+                ? "#EBC97A"
+                : tp
+                  ? "#E5E7E4"
+                  : "#C9CEC9";
+            c += `<text x="68" y="${y + 14}" text-anchor="end" font-size="10.5" fill="${dp ? "#0B6046" : ak ? "#8A5A00" : "#54606B"}">${a.nm}</text>`;
+            c += `<rect x="${76 + a.s * ux}" y="${y + 2}" width="${Math.max((a.e - a.s) * ux, 5)}" height="19" rx="3" fill="${f}"/>`;
+            c += `<text x="${76 + a.s * ux + ((a.e - a.s) * ux) / 2}" y="${y + 16}" text-anchor="middle" font-size="9.5" fill="#2B3238">${a.s}–${a.e}</text>`;
+          });
+          c += `<line x1="${76 + s.wk * ux}" y1="12" x2="${76 + s.wk * ux}" y2="${H0 - 14}" stroke="#C9973A" stroke-width="1.5" stroke-dasharray="3 3"/>`;
+          let h = pn(
+            "Jadwal — garis putus = waktu bebasku",
+            `<svg width="100%" viewBox="0 0 ${W} ${H0}" role="img"><title>Jadwal acara</title><desc>Batang waktu tiap acara.</desc>${c}</svg>`,
+          );
+          if (s.ck)
+            h += hg(
+              "Bentrok atau tidak",
+              [
+                { l: "jam mulai acara", v: s.ck.s },
+                { l: "jam aku bebas", v: s.ck.w },
+                {
+                  l: "mulai ≥ bebas ?",
+                  v: s.ck.ok ? "true" : "false",
+                  win: s.ck.ok,
+                },
+              ],
+              {
+                j: s.ck.ok ? "ok" : "no",
+                t: s.ck.ok
+                  ? "tidak bentrok → ambil, geser waktu bebas"
+                  : "bentrok → lewati",
+              },
+            );
+          return h;
+        },
+        kanan(s) {
+          return pn(
+            "Hitungan",
+            `<div class="row">${cl(s.wk, { u: "waktu bebas", c: "s" })}${cl(s.jm, { u: "acara diikuti", c: "h" })}</div>`,
+          );
+        },
+        end(s) {
+          return s.end
+            ? hs(s.end.v + " acara", s.end.nm || "tidak ada yang bisa diikuti")
+            : "";
+        },
+        tests: [
+          ["4\n1 4\n3 5\n0 6\n5 7", "2", "kasus dasar"],
+          ["1\n2 5", "1", "satu acara", 1],
+          ["3\n1 3\n3 5\n5 7", "3", "bersambung pas"],
+          ["3\n1 10\n2 3\n4 5", "2", "acara panjang dihindari", 1],
+          ["4\n1 2\n1 2\n1 2\n1 2", "1", "semua identik", 1],
+          ["3\n0 5\n0 5\n0 5", "1", "semua bentrok", 1],
+          ["5\n7 9\n0 1\n4 6\n2 3\n8 10", "4", "input acak"],
+          ["6\n1 3\n2 5\n4 7\n1 8\n5 9\n8 10", "3", "klasik"],
+        ],
+        soal: {
+          j: "Activity Selection",
+          i: "Diberikan N acara dengan jam mulai dan selesai. Kamu hanya bisa mengikuti satu acara pada satu waktu. Cari jumlah maksimal acara yang bisa diikuti.",
+          io: [
+            ["Input", "Baris 1: n\nn baris: mulai selesai"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 10⁵"],
+            ["Contoh", "4\n1 4\n3 5\n0 6\n5 7"],
+            ["Hasil", "2"],
+          ],
+          c: "Acara yang mulai persis saat acara lain selesai tidak dihitung bentrok — pakai >= bukan >.",
+        },
+      };
+
+      /* ============ 09 ISI BENSIN ============ */
+      M.bensin = {
+        bab: "Greedy",
+        no: "9",
+        judul: "Minimal Isi Bensin",
+        sub: "Berhenti lebih awal dari yang perlu tidak pernah menguntungkan. Itu bukti greedy-nya.",
+        materi: [
+          {
+            h: "Aturannya",
+            p: [
+              "Jalan sejauh mungkin, lalu isi bensin di pom <strong>terjauh yang masih terjangkau</strong> sebelum kehabisan.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa greedy pasti benar",
+            p: [
+              "Berhenti lebih awal selalu memberi jangkauan lebih pendek. Kalau kamu isi di km 15 padahal masih bisa sampai km 25, jangkauan barumu jadi km 45 — bukan km 55.",
+              "Tidak ada satu pun keuntungan dari berhenti lebih awal.",
+            ],
+          },
+          {
+            h: "Kapan macet",
+            p: [
+              "Kalau tidak ada pom baru yang terjangkau dan tujuan belum tercapai, berarti mustahil. Cetak −1.",
+            ],
+          },
+        ],
+        kode: [
+          "long long posisi = 0;  int isi = 0, i = 0;",
+          "",
+          "while (posisi + tangki < tujuan) {",
+          "    long long terjauh = -1;",
+          "    while (i < n && pom[i] <= posisi + tangki)",
+          "        terjauh = pom[i++];",
+          "",
+          "    if (terjauh <= posisi) { cout << -1; return 0; }",
+          "",
+          "    posisi = terjauh;  isi++;",
+          "}",
+          "cout << isi;",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2],
+            t: (v) => ["6 pom", "macet", "pas-pasan"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            { p: [15, 25, 40, 55, 70, 85], D: 100, T: 30 },
+            { p: [10, 20], D: 100, T: 30 },
+            { p: [20, 30, 40], D: 50, T: 20 },
+          ];
+          const { p: POM, D, T } = SET[I.set],
+            S = [],
+            brt = [];
+          let pos = 0,
+            isi = 0,
+            ok = 1;
+          S.push({
+            ln: [1],
+            tag: "mulai",
+            d: `Mulai di km 0 dengan tangki penuh. Tangki cukup <b>${T} km</b>, tujuan km <b>${D}</b>.`,
+            POM,
+            D,
+            T,
+            pos,
+            isi,
+            brt: [],
+            jk: T,
+            tj: null,
+            ck: null,
+          });
+          while (pos + T < D) {
+            const jk = pos + T;
+            let tj = -1;
+            for (const q of POM) if (q > pos && q <= jk) tj = q;
+            S.push({
+              ln: [5, 6],
+              tag: "cek",
+              d: `Dari km ${pos}, bensin cukup sampai km ${jk}. Pom mana yang terjauh tapi terjangkau?`,
+              POM,
+              D,
+              T,
+              pos,
+              isi,
+              brt: brt.slice(),
+              jk,
+              tj,
+              ck: { pos, jk, tj },
+            });
+            if (tj <= pos) {
+              ok = 0;
+              S.push({
+                ln: [8],
+                tag: "pangkas",
+                d: `Tidak ada pom baru dalam jangkauan, tujuan masih jauh. Perjalanan <b>macet</b>.`,
+                POM,
+                D,
+                T,
+                pos,
+                isi,
+                brt: brt.slice(),
+                jk,
+                tj: null,
+                ck: null,
+                end: { v: -1, no: 1 },
+              });
+              break;
+            }
+            pos = tj;
+            isi++;
+            brt.push(tj);
+            S.push({
+              ln: [10],
+              tag: "ambil",
+              d: `Isi bensin di km ${pos} — berhenti ke-${isi}. Sekarang bisa jalan sampai km ${pos + T}.`,
+              POM,
+              D,
+              T,
+              pos,
+              isi,
+              brt: brt.slice(),
+              jk: pos + T,
+              tj: null,
+              ck: null,
+            });
+          }
+          if (ok)
+            S.push({
+              ln: [12],
+              tag: "selesai",
+              d: `Dari km ${pos} bensin cukup sampai km ${pos + T} — sudah melewati tujuan. Sampai dengan <b>${isi}</b> kali berhenti.`,
+              POM,
+              D,
+              T,
+              pos,
+              isi,
+              brt: brt.slice(),
+              jk: pos + T,
+              tj: null,
+              ck: null,
+              end: { v: isi },
+            });
+          return S;
+        },
+        kiri(s) {
+          const W = 440,
+            H0 = 72,
+            ux = (W - 40) / s.D;
+          let c = `<line x1="20" y1="38" x2="${20 + s.D * ux}" y2="38" stroke="#D2D5D1" stroke-width="2.5"/>`;
+          if (s.jk !== null) {
+            c += `<rect x="${20 + s.pos * ux}" y="32" width="${Math.min(s.jk - s.pos, s.D - s.pos) * ux}" height="12" fill="#EBC97A" opacity=".4" rx="2"/>`;
+            if (s.jk <= s.D) {
+              c += `<line x1="${20 + s.jk * ux}" y1="26" x2="${20 + s.jk * ux}" y2="50" stroke="#C97070" stroke-width="1.5" stroke-dasharray="3 3"/>`;
+              c += `<text x="${20 + s.jk * ux}" y="21" text-anchor="middle" font-size="8.5" fill="#9A3838">batas bensin</text>`;
+            }
+          }
+          s.POM.forEach((q) => {
+            const x = 20 + q * ux,
+              dp = s.brt.indexOf(q) >= 0,
+              tj = s.tj === q;
+            c += `<circle cx="${x}" cy="38" r="${dp || tj ? 6 : 4}" fill="${dp ? "#3D9E78" : tj ? "#C9973A" : "#B4BAB4"}"/>`;
+            c += `<text x="${x}" y="60" text-anchor="middle" font-size="9" fill="${dp ? "#0B6046" : "#8B959D"}">${q}</text>`;
+          });
+          c += `<circle cx="${20 + s.D * ux}" cy="38" r="5" fill="#6C68B0"/>`;
+          c += `<text x="${20 + s.D * ux}" y="60" text-anchor="middle" font-size="9" fill="#43407F">${s.D}</text>`;
+          c += `<circle cx="${20 + s.pos * ux}" cy="38" r="4" fill="#16191C"/>`;
+          let h = pn(
+            "Perjalanan — bulat = pom · hijau = tempat berhenti · hitam = posisiku",
+            `<svg width="100%" viewBox="0 0 ${W} ${H0}" role="img"><title>Perjalanan</title><desc>Posisi dan pom bensin.</desc>${c}</svg>`,
+          );
+          if (s.ck)
+            h += hg(
+              "Pom terjauh yang terjangkau",
+              [
+                { l: "posisi sekarang", v: "km " + s.ck.pos },
+                { l: "bensin cukup sampai", v: "km " + s.ck.jk },
+                {
+                  l: "pom terjauh terjangkau",
+                  v: s.ck.tj > 0 ? "km " + s.ck.tj : "tidak ada",
+                  win: s.ck.tj > 0,
+                },
+              ],
+              {
+                j: s.ck.tj > 0 ? "ok" : "no",
+                t:
+                  s.ck.tj > 0
+                    ? "isi di sini — berhenti lebih awal cuma memperpendek jangkauan"
+                    : "tidak ada pom terjangkau → macet",
+              },
+            );
+          return h;
+        },
+        kanan(s) {
+          return pn(
+            "Hitungan",
+            `<div class="row">${cl("km " + s.pos, { u: "posisi", c: "s" })}${cl(s.isi, { u: "kali berhenti", c: "h" })}</div>`,
+          );
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.no ? "−1" : s.end.v + " kali",
+                s.end.no
+                  ? "Tidak mungkin sampai tujuan dengan pom yang tersedia."
+                  : "Greedy pasti benar di sini.",
+                s.end.no,
+              )
+            : "";
+        },
+        tests: [
+          ["6 100 30\n15 25 40 55 70 85", "3", "kasus dasar"],
+          ["2 100 30\n10 20", "-1", "tidak bisa sampai", 1],
+          ["1 20 30\n10", "0", "langsung sampai", 1],
+          ["3 50 20\n20 30 40", "2", "pas-pasan"],
+          ["4 100 25\n25 50 75 90", "3", "jarak persis batas"],
+          ["2 60 30\n30 45", "1", "satu kali cukup"],
+        ],
+        soal: {
+          j: "Minimal Isi Bensin",
+          i: "Berkendara dari km 0 ke km D dengan tangki penuh yang cukup T km. Ada N pom bensin. Cari jumlah minimal berhenti isi bensin. Jika tidak mungkin, cetak −1.",
+          io: [
+            ["Input", "Baris 1: n D T\nBaris 2: n posisi pom"],
+            ["Output", "Jumlah berhenti, atau −1"],
+            ["Batas", "1 ≤ n ≤ 10⁵, T, D ≤ 10⁹"],
+            ["Contoh", "6 100 30\n15 25 40 55 70 85"],
+            ["Hasil", "3"],
+          ],
+          c: "Pakai long long untuk posisi dan jarak.",
+        },
+      };
+
+      /* ============ 10 MEMOIZATION ============ */
+      M.memo = {
+        bab: "Dynamic Programming",
+        no: "10",
+        judul: "Dari Rekursi ke Memo",
+        sub: "Jembatan yang membuat DP terasa alami: tulis rekursi polos dulu, lalu tambahkan catatan.",
+        materi: [
+          {
+            h: "Kenapa rekursi polos lambat",
+            p: [
+              'Fibonacci rekursif menghitung <code class="c">fib(3)</code> berkali-kali di cabang yang berbeda. Untuk n = 40, jumlah pemanggilannya lebih dari satu miliar.',
+              "Bukan karena rumusnya salah — tapi karena hasil yang sama dihitung ulang terus.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Perbaikannya tiga baris",
+            p: [
+              "Sebelum menghitung, <strong>cek catatan</strong>. Kalau sudah pernah dihitung, langsung kembalikan. Kalau belum, hitung lalu <strong>catat sebelum kembali</strong>.",
+              "Dari O(2ⁿ) jadi O(n), cuma dengan menambah satu array.",
+            ],
+          },
+          {
+            h: "Hubungannya dengan tabel",
+            p: [
+              "Memo (top-down) dan tabel (bottom-up) menyimpan hal yang sama. Bedanya cuma arah pengisian: memo mengisi sesuai kebutuhan, tabel mengisi berurutan dari kecil ke besar.",
+              "Kalau kamu bisa menurunkan tabel dari rekursi sendiri, DP tidak akan pernah terasa seperti hafalan.",
+            ],
+          },
+        ],
+        kode: [
+          "int memo[105];",
+          "bool ada[105];",
+          "",
+          "int fib(int n) {",
+          "    if (n <= 1) return n;",
+          "",
+          "    if (ada[n]) return memo[n];      // sudah pernah dihitung",
+          "",
+          "    int hasil = fib(n-1) + fib(n-2);",
+          "",
+          "    ada[n] = true;",
+          "    return memo[n] = hasil;          // catat sebelum kembali",
+          "}",
+        ],
+        opsi: [
+          {
+            k: "memo",
+            l: "pakai catatan",
+            p: [1, 0],
+            t: (v) => (v ? "ya (memo)" : "tidak (polos)"),
+          },
+          { k: "n", l: "nilai n", p: [5, 6, 7], t: (v) => "n = " + v },
+        ],
+        inp: { memo: 1, n: 6 },
+        build(I) {
+          const N = I.n,
+            S = [],
+            memo = {},
+            ada = {};
+          let call = 0,
+            hit = 0;
+          const q = (ln, tag, d, n, ck) =>
+            S.push({
+              ln,
+              tag,
+              d,
+              N,
+              n,
+              memo: Object.assign({}, memo),
+              call,
+              hit,
+              ck,
+            });
+          q(
+            [1, 2],
+            "mulai",
+            `Hitung fib(${N}). ${I.memo ? "Catatan disiapkan — tiap hasil disimpan sekali." : "Tanpa catatan — tiap cabang menghitung dari nol."}`,
+            null,
+            null,
+          );
+          (function f(n, dep) {
+            call++;
+            if (n <= 1) {
+              q(
+                [5],
+                "jawab",
+                `fib(${n}) = ${n}. Ini basis, langsung kembali.`,
+                n,
+                null,
+              );
+              return n;
+            }
+            if (I.memo && ada[n]) {
+              hit++;
+              q(
+                [7],
+                "ambil",
+                `fib(${n}) sudah pernah dihitung — ambil dari catatan, nilainya ${memo[n]}. Tidak perlu turun lagi.`,
+                n,
+                { hit: 1, n, v: memo[n] },
+              );
+              return memo[n];
+            }
+            q(
+              [4],
+              "masuk",
+              `Masuk fib(${n}). Belum ada di catatan, jadi harus dihitung.`,
+              n,
+              null,
+            );
+            const a = f(n - 1, dep + 1),
+              b = f(n - 2, dep + 1);
+            const h = a + b;
+            if (I.memo) {
+              ada[n] = 1;
+              memo[n] = h;
+            }
+            q(
+              [9, 12],
+              I.memo ? "rekor" : "tetap",
+              `fib(${n}) = fib(${n - 1}) + fib(${n - 2}) = ${a} + ${b} = <b>${h}</b>.` +
+                (I.memo ? " Catat sebelum kembali." : ""),
+              n,
+              { sum: 1, n, a, b, h },
+            );
+            return h;
+          })(N, 0);
+          S.push({
+            ln: [],
+            tag: "selesai",
+            d: `Selesai. Total <b>${call}</b> pemanggilan${I.memo ? `, dengan ${hit} kali membaca catatan.` : "."}`,
+            N,
+            n: null,
+            memo: Object.assign({}, memo),
+            call,
+            hit,
+            ck: null,
+            end: {
+              v: memo[N] !== undefined ? memo[N] : null,
+              call,
+              hit,
+              memo: I.memo,
+            },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Pemanggilan",
+            `<div class="row">${cl(s.call, { u: "total panggil", c: "a" })}${cl(s.hit, { u: "baca catatan", c: "h" })}</div>`,
+          );
+          if (s.ck) {
+            if (s.ck.hit)
+              h += hg(
+                `fib(${s.ck.n}) — cek catatan`,
+                [
+                  { l: "sudah pernah dihitung?", v: "true", win: 1 },
+                  {
+                    l: "nilai tersimpan",
+                    e: `memo[${s.ck.n}]`,
+                    v: s.ck.v,
+                    win: 1,
+                  },
+                ],
+                {
+                  j: "ok",
+                  t: "langsung kembali — dua cabang di bawahnya tidak perlu dijelajahi",
+                },
+              );
+            else if (s.ck.sum)
+              h += hg(`Hitung fib(${s.ck.n})`, [
+                { l: `fib(${s.ck.n - 1})`, v: s.ck.a },
+                { l: `fib(${s.ck.n - 2})`, v: s.ck.b },
+                { l: "jumlah", e: `${s.ck.a} + ${s.ck.b}`, v: s.ck.h, win: 1 },
+              ]);
+          }
+          return h;
+        },
+        kanan(s) {
+          const ks = [];
+          for (let k = 0; k <= s.N; k++) ks.push(k);
+          return pn(
+            "Catatan memo[]",
+            `<div class="row">${ks
+              .map((k) => {
+                const ada = s.memo[k] !== undefined;
+                return cl(ada ? s.memo[k] : "·", {
+                  i: k,
+                  c: s.n === k ? "a" : ada ? "h" : "",
+                });
+              })
+              .join("")}</div>
+ <p style="font-size:13px;color:var(--pudar);margin-top:13px;line-height:1.55">Titik berarti belum pernah dihitung.</p>`,
+          );
+        },
+        end(s) {
+          if (!s.end) return "";
+          return hs(
+            s.end.call + " pemanggilan",
+            s.end.memo
+              ? `Dengan catatan, tiap nilai dihitung tepat sekali. ${s.end.hit} kali cukup membaca ulang.`
+              : `Tanpa catatan, nilai yang sama dihitung berulang-ulang. Untuk n = 40 ini jadi lebih dari satu miliar pemanggilan.`,
+            !s.end.memo,
+          );
+        },
+        tests: [
+          ["fib 10", "55", "memo: 19 panggilan"],
+          ["fib 20", "6765", "memo: 39 · polos: 21891"],
+          ["fib 40", "102334155", "polos butuh >1 miliar panggilan", 1],
+          ["fib 0", "0", "basis", 1],
+          ["fib 1", "1", "basis", 1],
+        ],
+        soal: {
+          j: "Fibonacci dengan Memoization",
+          i: "Hitung suku ke-n dari deret Fibonacci. Bandingkan jumlah pemanggilan fungsi antara versi polos dan versi bermemo.",
+          io: [
+            ["Input", "Satu bilangan n"],
+            ["Output", "Nilai fib(n) dan jumlah pemanggilan"],
+            ["Batas", "0 ≤ n ≤ 90"],
+            ["Contoh", "10"],
+            ["Hasil", "55"],
+          ],
+          c: "Untuk n > 90 pakai long long — fib(93) sudah melewati batas 64-bit. Ini soal latihan untuk merasakan bedanya, bukan cara terbaik menghitung Fibonacci.",
+        },
+      };
+
+      /* ============ 11 COIN CHANGE ============ */
+      M.coin = {
+        bab: "Dynamic Programming",
+        no: "11",
+        judul: "Coin Change Minimum",
+        sub: "Soal tempat greedy gagal telak, dan tempat DP menunjukkan kekuatannya.",
+        materi: [
+          {
+            h: "Kenapa greedy gagal",
+            p: [
+              'Koin <code class="c">9 6 1</code> target 12. Greedy ambil 9 dulu, lalu terpaksa tiga koin 1 — total 4 koin. Padahal <code class="c">6 + 6</code> cuma 2 koin.',
+              "Keputusan pertama merusak sisanya. Itu ciri soal yang butuh DP.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Cara DP berpikir",
+            p: [
+              'Mulai dari soal termudah, naik pelan-pelan, sambil mencatat. Untuk membayar 12, DP melihat catatannya sendiri: "kalau pakai koin 6, sisanya 6 — dan aku sudah catat bahwa 6 butuh 1 koin."',
+              'Karena loop dari kecil ke besar, <code class="c">dp[v−c]</code> pasti sudah dihitung sebelum <code class="c">dp[v]</code>.',
+            ],
+          },
+          {
+            h: "Kenapa pakai min",
+            p: [
+              'Untuk satu nilai, ada beberapa koin yang bisa dipakai — masing-masing menghasilkan satu kandidat. <code class="c">min</code> menyaring semuanya dan menyimpan yang terbaik. Tanpa itu, kandidat terakhir menimpa yang sebelumnya.',
+            ],
+          },
+        ],
+        kode: [
+          "vector<int> dp(target+1, INF);",
+          "dp[0] = 0;",
+          "",
+          "for (int v = 1; v <= target; v++)",
+          "    for (int c : koin)",
+          "        if (v >= c && dp[v-c] != INF)",
+          "            dp[v] = min(dp[v], dp[v-c] + 1);",
+          "",
+          "cout << (dp[target]==INF ? -1 : dp[target]);",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2],
+            t: (v) => ["9 6 1 → 12", "25 10 4 → 20", "2 → 7"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            { c: [9, 6, 1], t: 12 },
+            { c: [25, 10, 4], t: 20 },
+            { c: [2], t: 7 },
+          ];
+          const C = SET[I.set].c,
+            TG = SET[I.set].t,
+            INF = 999,
+            S = [],
+            dp = [0];
+          for (let v = 1; v <= TG; v++) dp.push(INF);
+          S.push({
+            ln: [1, 2],
+            tag: "mulai",
+            d: `Tabel diisi INF, kecuali dp[0] = 0 — karena 0 rupiah tidak butuh koin.`,
+            C,
+            TG,
+            dp: dp.slice(),
+            v: null,
+            ck: null,
+            INF,
+          });
+          for (let v = 1; v <= TG; v++) {
+            S.push({
+              ln: [4],
+              tag: "cek",
+              d: `Hitung dp[${v}] — berapa koin minimum untuk membayar ${v}?`,
+              C,
+              TG,
+              dp: dp.slice(),
+              v,
+              ck: null,
+              INF,
+            });
+            for (const c of C) {
+              if (v < c) {
+                S.push({
+                  ln: [6],
+                  tag: "lewat",
+                  d: `Koin ${c} terlalu besar untuk nilai ${v}.`,
+                  C,
+                  TG,
+                  dp: dp.slice(),
+                  v,
+                  ci: c,
+                  ck: { no: 1, c, v },
+                  INF,
+                });
+                continue;
+              }
+              const sub = dp[v - c],
+                kd = sub >= INF ? INF : sub + 1,
+                lm = dp[v],
+                bk = kd < lm;
+              if (bk) dp[v] = kd;
+              S.push({
+                ln: [7],
+                tag: bk ? "ambil" : "tetap",
+                d: bk
+                  ? `Pakai koin ${c}: sisanya ${v - c} yang butuh ${sub >= INF ? "∞" : sub} koin. Tambah 1 → ${kd >= INF ? "∞" : kd}. Lebih baik.`
+                  : `Pakai koin ${c} butuh ${kd >= INF ? "∞" : kd} — tidak lebih baik dari ${lm >= INF ? "∞" : lm}.`,
+                C,
+                TG,
+                dp: dp.slice(),
+                v,
+                ci: c,
+                sub: v - c,
+                ck: {
+                  c,
+                  v,
+                  ss: v - c,
+                  sv: sub >= INF ? "∞" : sub,
+                  kd: kd >= INF ? "∞" : kd,
+                  lm: lm >= INF ? "∞" : lm,
+                  bk,
+                },
+                INF,
+              });
+            }
+          }
+          const jw = dp[TG] >= INF ? -1 : dp[TG];
+          S.push({
+            ln: [9],
+            tag: "selesai",
+            d: `Selesai. dp[${TG}] = <b>${jw === -1 ? "tidak mungkin" : jw}</b>.`,
+            C,
+            TG,
+            dp: dp.slice(),
+            v: null,
+            ck: null,
+            INF,
+            end: { v: jw },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Koin yang tersedia",
+            `<div class="row">${s.C.map((c) => cl(c, { c: s.ci === c ? "a" : "" })).join("")}</div>`,
+          );
+          if (s.ck) {
+            if (s.ck.no)
+              h += hg(
+                `Koin ${s.ck.c} untuk nilai ${s.ck.v}`,
+                [{ l: `apakah ${s.ck.v} ≥ ${s.ck.c} ?`, v: "false" }],
+                { j: "no", t: "koin terlalu besar → lewati" },
+              );
+            else
+              h += hg(
+                `Coba koin ${s.ck.c} untuk nilai ${s.ck.v}`,
+                [
+                  {
+                    l: "sisa setelah pakai koin",
+                    e: `${s.ck.v} − ${s.ck.c}`,
+                    v: s.ck.ss,
+                  },
+                  { l: "koin untuk sisa itu", e: `dp[${s.ck.ss}]`, v: s.ck.sv },
+                  {
+                    l: "kandidat: tambah 1 koin",
+                    e: `${s.ck.sv} + 1`,
+                    v: s.ck.kd,
+                    win: s.ck.bk,
+                    lose: !s.ck.bk,
+                  },
+                ],
+                {
+                  j: s.ck.bk ? "ok" : "",
+                  t: `min(${s.ck.lm}, ${s.ck.kd}) = ${s.ck.bk ? s.ck.kd : s.ck.lm}`,
+                },
+              );
+          }
+          return h;
+        },
+        kanan(s) {
+          let t = '<div class="row">';
+          for (let v = 0; v <= s.TG; v++) {
+            const vl = s.dp[v] >= s.INF ? "∞" : s.dp[v];
+            let c = "";
+            if (s.dp[v] < s.INF) c = "h";
+            if (s.ck && s.ck.ss === v) c = "s";
+            if (s.v === v) c = "a";
+            t += cl(vl, { i: v, c });
+          }
+          return pn("Tabel dp — koin minimum untuk tiap nilai", t + "</div>");
+        },
+        end(s) {
+          return s.end
+            ? hs(
+                s.end.v === -1 ? "−1" : s.end.v + " koin",
+                s.end.v === -1
+                  ? "Target tidak bisa dibayar."
+                  : "DP mencoba semua koin di tiap nilai, jadi tidak tertipu pilihan awal.",
+                s.end.v === -1,
+              )
+            : "";
+        },
+        tests: [
+          ["3 12\n9 6 1", "2", "greedy gagal (beri 4)", 1],
+          ["3 41\n25 10 4", "5", "greedy gagal", 1],
+          ["4 30\n1 5 10 25", "2", "25 + 5"],
+          ["1 3\n2", "-1", "tidak mungkin", 1],
+          ["2 0\n1 5", "0", "target nol", 1],
+        ],
+        soal: {
+          j: "Coin Change",
+          i: "Diberikan pecahan koin dan sebuah target. Setiap koin boleh dipakai berkali-kali. Cari jumlah koin minimum untuk membayar target tepat. Jika tidak mungkin, cetak −1.",
+          io: [
+            ["Input", "Baris 1: n target\nBaris 2: n pecahan"],
+            ["Output", "Jumlah koin, atau −1"],
+            ["Batas", "1 ≤ n ≤ 12, 1 ≤ target ≤ 10⁴"],
+            ["Contoh", "3 12\n9 6 1"],
+            ["Hasil", "2"],
+          ],
+          c: "Kompleksitas O(target × n). Target adalah NILAI, bukan jumlah koin — kalau target 10⁹, tabel ini tidak muat.",
+        },
+      };
+
+      /* ============ 12 KNAPSACK ============ */
+      M.knap = {
+        bab: "Dynamic Programming",
+        no: "12",
+        judul: "0/1 Knapsack",
+        sub: "Tiap kotak tabel menyimpan yang terbaik dari sekelompok kombinasi, bukan satu kombinasi.",
+        materi: [
+          {
+            h: "Apa isi dp[i][w]",
+            p: [
+              "Nilai terbaik jika <strong>hanya boleh memilih dari barang 1 sampai i</strong>, dan berat total tidak melebihi w.",
+              'Perhatikan: <code class="c">i</code> bukan "barang ke-i", melainkan "sampai barang ke-i".',
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa dua cabang cukup",
+            p: [
+              "Setiap kombinasi pasti masuk salah satu: <strong>mengandung barang i</strong>, atau <strong>tidak</strong>. Tidak ada kelompok ketiga.",
+              'Karena keduanya menutupi semua kemungkinan tanpa tumpang tindih, <code class="c">max(A, B)</code> otomatis mencakup semuanya.',
+            ],
+          },
+          {
+            h: "Kenapa dp[i−1]",
+            p: [
+              'Kalau barang i diambil, sisa tas tinggal <code class="c">w − berat[i]</code>. Untuk mengisi sisa itu kamu cuma boleh pakai barang 1..i−1, karena barang i sudah habis.',
+              'Ganti <code class="c">i−1</code> jadi <code class="c">i</code> dan kamu dapat Unbounded Knapsack.',
+            ],
+          },
+          {
+            h: "Dua penjaga wajib",
+            p: [
+              '<code class="c">if (w >= berat[i])</code> mencegah indeks negatif. <code class="c">dp[i][w] = dp[i-1][w]</code> di awal memastikan tiap kotak selalu terisi.',
+            ],
+          },
+        ],
+        kode: [
+          "for (int i = 1; i <= n; i++)",
+          "  for (int w = 0; w <= W; w++) {",
+          "      dp[i][w] = dp[i-1][w];                    // A: tidak ambil",
+          "      if (w >= berat[i])",
+          "          dp[i][w] = max(dp[i][w],",
+          "              dp[i-1][w-berat[i]] + nilai[i]);  // B: ambil",
+          "  }",
+          "",
+          "cout << dp[n][W];",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "skenario barang",
+            p: [0, 1, 2],
+            t: (v) => ["asli", "Perak juara", "jebakan rasio"][v],
+          },
+          {
+            k: "kap",
+            l: "kapasitas",
+            p: [0, 1, 2, 3],
+            t: (v) => [7, 8, 10, 12][v] + " kg",
+          },
+          {
+            k: "unb",
+            l: "varian",
+            p: [0, 1],
+            t: (v) => (v ? "unbounded" : "0/1"),
+          },
+        ],
+        inp: { set: 0, kap: 1, unb: 0 },
+        build(I) {
+          const SET = [
+            [
+              ["Emas", 5, 60],
+              ["Perak", 3, 30],
+              ["Berlian", 4, 50],
+            ],
+            [
+              ["Emas", 5, 60],
+              ["Perak", 3, 80],
+              ["Berlian", 4, 50],
+            ],
+            [
+              ["A", 6, 60],
+              ["B", 5, 45],
+              ["C", 5, 45],
+            ],
+          ];
+          const B = SET[I.set],
+            KAP = [7, 8, 10, 12][I.kap],
+            n = B.length,
+            S = [],
+            dp = [];
+          for (let i = 0; i <= n; i++) dp.push(new Array(KAP + 1).fill(0));
+          S.push({
+            ln: [],
+            tag: "mulai",
+            d: "Baris 0 = tanpa barang sama sekali, nilainya 0 semua. Ini basis yang pasti benar.",
+            B,
+            KAP,
+            dp: JSON.parse(JSON.stringify(dp)),
+            i: null,
+            w: null,
+            ck: null,
+            isi: [],
+          });
+          for (let i = 1; i <= n; i++) {
+            const b = B[i - 1];
+            S.push({
+              ln: [1],
+              tag: "masuk",
+              d: `Baris ${i}: barang <b>${b[0]}</b> (${b[1]} kg, nilai ${b[2]}) mulai boleh dipertimbangkan.`,
+              B,
+              KAP,
+              dp: JSON.parse(JSON.stringify(dp)),
+              i,
+              w: null,
+              ck: null,
+              isi: [],
+            });
+            for (let w = 0; w <= KAP; w++) {
+              const A = dp[i - 1][w],
+                mt = w >= b[1],
+                src = I.unb ? i : i - 1;
+              const sub = mt ? dp[src][w - b[1]] : null,
+                Bv = mt ? sub + b[2] : null,
+                pl = mt && Bv > A;
+              dp[i][w] = pl ? Bv : A;
+              S.push({
+                ln: mt ? [3, 5, 6] : [3, 4],
+                tag: pl ? "ambil" : mt ? "tetap" : "lewat",
+                d: !mt
+                  ? `Kapasitas ${w} terlalu kecil untuk ${b[0]} (${b[1]} kg).`
+                  : pl
+                    ? `Ambil ${b[0]} lebih untung: ${Bv} > ${A}.`
+                    : `Tidak ambil ${b[0]} lebih baik: ${A} ≥ ${Bv}.`,
+                B,
+                KAP,
+                dp: JSON.parse(JSON.stringify(dp)),
+                i,
+                w,
+                isi: [],
+                ck: {
+                  A,
+                  Bv,
+                  mt,
+                  pl,
+                  w,
+                  br: b[1],
+                  nl: b[2],
+                  ss: w - b[1],
+                  sub,
+                  nm: b[0],
+                  i,
+                  src,
+                },
+              });
+            }
+          }
+          const isi = [];
+          let w2 = KAP;
+          if (I.unb) {
+            let ii = n;
+            while (ii >= 1) {
+              const b = B[ii - 1];
+              if (w2 >= b[1] && dp[ii][w2] === dp[ii][w2 - b[1]] + b[2]) {
+                isi.push(ii - 1);
+                w2 -= b[1];
+              } else ii--;
+            }
+          } else {
+            for (let i = n; i >= 1; i--)
+              if (dp[i][w2] !== dp[i - 1][w2]) {
+                isi.push(i - 1);
+                w2 -= B[i - 1][1];
+              }
+          }
+          S.push({
+            ln: [9],
+            tag: "selesai",
+            d: `Selesai. dp[${n}][${KAP}] = <b>${dp[n][KAP]}</b>.`,
+            B,
+            KAP,
+            dp: JSON.parse(JSON.stringify(dp)),
+            i: null,
+            w: null,
+            ck: null,
+            isi,
+            end: { v: dp[n][KAP], isi },
+          });
+          return S;
+        },
+        kiri(s) {
+          let bh = '<div class="row">';
+          s.B.forEach((b, k) => {
+            let br = 0;
+            s.isi.forEach((x) => {
+              if (x === k) br++;
+            });
+            const ak = s.i === k + 1;
+            bh += `<div class="cl ${br ? "h" : ak ? "a" : ""}"><div class="i">${b[1]} kg</div><div class="v" style="min-width:72px">${b[0]}</div><div class="u">nilai ${b[2]}${br ? ` ×${br}` : ""}</div></div>`;
+          });
+          let h = pn("Barang", bh + "</div>");
+          if (s.ck) {
+            const r = [
+              {
+                l: `A · tidak ambil ${s.ck.nm}`,
+                e: `dp[${s.ck.i - 1}][${s.ck.w}]`,
+                v: s.ck.A,
+                win: !s.ck.pl,
+                lose: s.ck.pl,
+              },
+            ];
+            if (s.ck.mt)
+              r.push({
+                l: `B · ambil ${s.ck.nm}`,
+                e: `${s.ck.nl} + dp[${s.ck.src}][${s.ck.ss}]=${s.ck.sub}`,
+                v: s.ck.Bv,
+                win: s.ck.pl,
+                lose: !s.ck.pl,
+              });
+            h += hg(
+              `dp[${s.ck.i}][${s.ck.w}] — ambil "${s.ck.nm}"?`,
+              r,
+              s.ck.mt
+                ? {
+                    j: s.ck.pl ? "ok" : "",
+                    t: `max(${s.ck.A}, ${s.ck.Bv}) = ${Math.max(s.ck.A, s.ck.Bv)}`,
+                  }
+                : {
+                    j: "no",
+                    t: `${s.ck.br} kg tidak muat di ${s.ck.w} kg — cabang B tidak ada`,
+                  },
+            );
+          }
+          return h;
+        },
+        kanan(s) {
+          let t = '<table class="dp"><tr><td class="hd">kg →</td>';
+          for (let w = 0; w <= s.KAP; w++)
+            t += `<td class="hd ${s.w === w ? "on" : ""}">${w}</td>`;
+          t += "</tr>";
+          for (let i = 0; i <= s.B.length; i++) {
+            const nm = i === 0 ? "—" : s.B[i - 1][0].substring(0, 4);
+            t += `<tr><td class="hd ${s.i === i ? "on" : ""}">${i} ${nm}</td>`;
+            for (let w = 0; w <= s.KAP; w++) {
+              let c = "dc";
+              if (s.dp[i][w] > 0) c += " f";
+              if (s.ck && s.ck.mt && i === s.ck.src && w === s.ck.ss)
+                c = "dc b";
+              if (s.ck && i === s.ck.i - 1 && w === s.ck.w) c = "dc a";
+              if (s.i === i && s.w === w) c = "dc n";
+              if (s.end && i === s.B.length && w === s.KAP) c = "dc j";
+              t += `<td><div class="${c}">${s.dp[i][w]}</div></td>`;
+            }
+            t += "</tr>";
+          }
+          return pn(
+            "Tabel dp — ungu cabang A · hijau cabang B",
+            t + "</table>",
+          );
+        },
+        end(s) {
+          if (!s.end) return "";
+          const ct = {};
+          s.end.isi.forEach((x) => (ct[x] = (ct[x] || 0) + 1));
+          const nm = Object.keys(ct).map(
+            (k) => s.B[k][0] + (ct[k] > 1 ? " ×" + ct[k] : ""),
+          );
+          let tw = 0;
+          s.end.isi.forEach((x) => (tw += s.B[x][1]));
+          return hs(
+            s.end.v,
+            `Isi tas: ${nm.length ? nm.join(" + ") : "kosong"} · total ${tw} / ${s.KAP} kg`,
+          );
+        },
+        tests: [
+          ["3 8\n5 60\n3 30\n4 50", "90", "kasus dasar"],
+          ["3 7\n5 60\n3 30\n4 50", "80", "greedy gagal (beri 60)", 1],
+          ["3 12\n5 60\n3 30\n4 50", "140", "semua muat"],
+          ["1 10\n5 100", "100", "satu barang muat", 1],
+          ["1 3\n5 100", "0", "tidak muat", 1],
+          ["3 0\n1 10\n2 20\n3 30", "0", "kapasitas nol", 1],
+          ["4 10\n5 10\n4 40\n6 30\n3 50", "90", "nilai ≠ berat"],
+          ["3 10\n6 60\n5 45\n5 45", "90", "jebakan rasio", 1],
+          ["3 10\n9 100\n5 55\n5 55", "110", "barang besar menipu", 1],
+          ["3 8\n5 60\n3 80\n4 50", "140", "Perak juara"],
+        ],
+        soal: {
+          j: "0/1 Knapsack",
+          i: "Tas berkapasitas W kilogram, N barang dengan berat dan nilai masing-masing. Setiap barang hanya boleh diambil utuh atau tidak sama sekali. Cari nilai total maksimal.",
+          io: [
+            ["Input", "Baris 1: n W\nn baris: berat nilai"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 100, 1 ≤ W ≤ 10⁴"],
+            ["Contoh", "3 8\n5 60\n3 30\n4 50"],
+            ["Hasil", "90"],
+          ],
+          c: "Ganti dp[i-1][w-berat[i]] jadi dp[i][w-berat[i]] untuk Unbounded. Untuk Bounded (stok k), pecah barang jadi k baris lalu pakai 0/1.",
+        },
+      };
+
+      /* ============ 13 HOUSE ROBBER ============ */
+      M.rumah = {
+        bab: "Dynamic Programming",
+        no: "13",
+        judul: "Ambil Tanpa Bersebelahan",
+        sub: "Larangan sederhana yang membuat greedy runtuh.",
+        materi: [
+          {
+            h: "Soalnya",
+            p: [
+              "Ada N kotak berisi koin. Kamu boleh mengambil dari kotak mana saja, <strong>tapi tidak boleh dua kotak yang bersebelahan</strong>.",
+            ],
+          },
+          {
+            k: 1,
+            h: "Kenapa greedy gagal",
+            p: [
+              "Mengambil kotak bernilai besar memaksamu melewatkan dua tetangganya. Keputusan sekarang membatasi pilihan nanti — itu tanda pasti soalnya butuh DP.",
+              'Untuk <code class="c">2 7 9 3 1</code>, greedy mengambil 9 duluan lalu terjebak. DP menemukan 2 + 9 + 1 = 12.',
+            ],
+          },
+          {
+            h: "Dua pilihan di tiap kotak",
+            p: [
+              "<strong>Tidak ambil</strong> — hasilnya sama dengan terbaik sampai kotak i−1. <strong>Ambil</strong> — kotak i−1 harus dilewati, jadi ambil terbaik sampai i−2 lalu tambahkan.",
+            ],
+          },
+        ],
+        kode: [
+          "dp[0] = a[0];",
+          "dp[1] = max(a[0], a[1]);",
+          "",
+          "for (int i = 2; i < n; i++)",
+          "    dp[i] = max(dp[i-1],            // tidak ambil kotak i",
+          "                dp[i-2] + a[i]);    // ambil, lompati i-1",
+          "",
+          "cout << dp[n-1];",
+        ],
+        opsi: [
+          {
+            k: "set",
+            l: "kasus uji",
+            p: [0, 1, 2],
+            t: (v) => ["7 kotak", "klasik", "ujung-ujung"][v],
+          },
+        ],
+        inp: { set: 0 },
+        build(I) {
+          const SET = [
+            [3, 9, 2, 8, 1, 9, 2],
+            [2, 7, 9, 3, 1],
+            [2, 1, 1, 2],
+          ];
+          const A = SET[I.set],
+            n = A.length,
+            S = [],
+            dp = new Array(n).fill(null);
+          dp[0] = A[0];
+          dp[1] = Math.max(A[0], A[1]);
+          S.push({
+            ln: [1, 2],
+            tag: "mulai",
+            d: `dp[i] = koin terbanyak sampai kotak i. Kotak 0 langsung ${A[0]}. Kotak 1 pilih yang lebih besar: max(${A[0]}, ${A[1]}) = ${dp[1]}.`,
+            A,
+            dp: dp.slice(),
+            i: null,
+            ck: null,
+          });
+          for (let i = 2; i < n; i++) {
+            const a = dp[i - 1],
+              b = dp[i - 2] + A[i],
+              am = b > a;
+            dp[i] = Math.max(a, b);
+            S.push({
+              ln: [5, 6],
+              tag: am ? "ambil" : "tetap",
+              d: `Kotak ${i} berisi ${A[i]} koin. Ambil kotak ini (lompati ${i - 1}) atau tidak?`,
+              A,
+              dp: dp.slice(),
+              i,
+              ck: { i, kn: A[i], a, b, am, sb: i - 2 },
+            });
+          }
+          const pl = [];
+          let cu = n - 1;
+          while (cu >= 0) {
+            if (cu === 0) {
+              pl.unshift(0);
+              break;
+            }
+            if (cu === 1) {
+              pl.unshift(dp[1] === A[1] ? 1 : 0);
+              break;
+            }
+            if (dp[cu] === dp[cu - 1]) cu--;
+            else {
+              pl.unshift(cu);
+              cu -= 2;
+            }
+          }
+          S.push({
+            ln: [8],
+            tag: "selesai",
+            d: `Selesai. Koin terbanyak <b>${dp[n - 1]}</b>.`,
+            A,
+            dp: dp.slice(),
+            i: null,
+            ck: null,
+            end: { v: dp[n - 1], pl },
+          });
+          return S;
+        },
+        kiri(s) {
+          let h = pn(
+            "Kotak koin — hijau = terpilih di jalur optimal",
+            `<div class="row">${s.A.map((v, k) => {
+              const p = s.end && s.end.pl.indexOf(k) >= 0;
+              let c = "";
+              if (p) c = "h";
+              if (s.ck && s.ck.sb === k) c = "s";
+              if (s.i === k) c = "a";
+              return cl(v, {
+                i: k,
+                u: s.dp[k] !== null && s.dp[k] !== undefined ? s.dp[k] : "·",
+                c,
+              });
+            }).join("")}</div>
+   <p style="font-size:13px;color:var(--pudar);margin-top:13px">angka atas = koin di kotak · angka bawah = dp[i]</p>`,
+          );
+          if (s.ck)
+            h += hg(
+              `Kotak ${s.ck.i} berisi ${s.ck.kn} koin`,
+              [
+                {
+                  l: `tidak ambil → dp[${s.ck.i - 1}]`,
+                  v: s.ck.a,
+                  win: !s.ck.am,
+                  lose: s.ck.am,
+                },
+                {
+                  l: `ambil → ${s.ck.kn} + dp[${s.ck.sb}]`,
+                  v: s.ck.b,
+                  win: s.ck.am,
+                  lose: !s.ck.am,
+                },
+              ],
+              {
+                j: s.ck.am ? "ok" : "",
+                t: `max(${s.ck.a}, ${s.ck.b}) = ${Math.max(s.ck.a, s.ck.b)}`,
+              },
+            );
+          return h;
+        },
+        kanan(s) {
+          return pn(
+            "Tabel dp",
+            `<div class="row">${s.dp.map((v, k) => cl(v === null ? "·" : v, { i: k, c: s.i === k ? "a" : v !== null ? "h" : "" })).join("")}</div>`,
+          );
+        },
+        end(s) {
+          if (!s.end) return "";
+          return hs(
+            s.end.v + " koin",
+            s.end.pl.map((k) => `kotak ${k} (${s.A[k]})`).join(" + "),
+          );
+        },
+        tests: [
+          ["7\n3 9 2 8 1 9 2", "26", "kasus dasar"],
+          ["5\n2 7 9 3 1", "12", "klasik LeetCode"],
+          ["1\n5", "5", "satu kotak", 1],
+          ["2\n4 7", "7", "dua kotak, ambil satu", 1],
+          ["4\n2 1 1 2", "4", "ambil ujung-ujungnya"],
+          ["4\n0 0 0 0", "0", "semua nol", 1],
+        ],
+        soal: {
+          j: "House Robber",
+          i: "Ada N kotak berjajar, masing-masing berisi sejumlah koin. Kamu boleh mengambil koin dari kotak mana saja, tapi tidak boleh dari dua kotak yang bersebelahan. Cari total koin maksimal.",
+          io: [
+            ["Input", "Baris 1: n\nBaris 2: n bilangan"],
+            ["Output", "Satu bilangan"],
+            ["Batas", "1 ≤ n ≤ 10⁵, 0 ≤ a[i] ≤ 10⁴"],
+            ["Contoh", "5\n2 7 9 3 1"],
+            ["Hasil", "12"],
+          ],
+          c: "Perhatikan kasus n = 1 dan n = 2 secara terpisah sebelum loop.",
+        },
+      };
+
+      /* ============ RUNTIME ============ */
+      const URUT = [
+        "paren",
+        "permut",
+        "kadane",
+        "circ",
+        "mono",
+        "air",
+        "freq",
+        "acara",
+        "bensin",
+        "memo",
+        "coin",
+        "knap",
+        "rumah",
+      ];
+      let AK = "paren",
+        S = [],
+        I = 0,
+        T = null,
+        INP = {};
+
+      function nav() {
+        let h = "",
+          bl = "";
+        URUT.forEach((k) => {
+          const m = M[k];
+          if (m.bab !== bl) {
+            h += `<div class="bab">${m.bab}</div>`;
+            bl = m.bab;
+          }
+          h += `<div class="nl ${k === AK ? "on" : ""}" data-k="${k}"><span class="no">${m.no}</span><span>${m.judul}</span></div>`;
+        });
+        E("nav").innerHTML = h;
+        document
+          .querySelectorAll(".nl")
+          .forEach((el) => (el.onclick = () => pilih(el.dataset.k)));
+      }
+      function pilih(k) {
+        AK = k;
+        const m = M[k];
+        INP = Object.assign({}, m.inp || {});
+        nav();
+        E("eb").textContent = m.bab;
+        E("jd").textContent = m.judul;
+        E("sb").textContent = m.sub;
+        E("materi").innerHTML = (m.materi || [])
+          .map(
+            (x) =>
+              `<div class="mt ${x.k ? "kunci" : ""}"><h4>${x.h}</h4>${x.p.map((p) => `<p>${p}</p>`).join("")}</div>`,
+          )
+          .join("");
+        opsi();
+        test();
+        soal();
+        reset();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+      function opsi() {
+        const m = M[AK];
+        if (!m.opsi || !m.opsi.length) {
+          E("opsi").innerHTML = "";
+          return;
+        }
+        E("opsi").innerHTML = m.opsi
+          .map(
+            (o) =>
+              `<div class="ol">${o.l}</div><div class="og" data-key="${o.k}">${o.p.map((v) => `<button class="o ${INP[o.k] === v ? "on" : ""}" data-v="${v}">${o.t(v)}</button>`).join("")}</div>`,
+          )
+          .join("");
+        document.querySelectorAll("#opsi .og").forEach((g) =>
+          g.querySelectorAll("button").forEach(
+            (b) =>
+              (b.onclick = () => {
+                INP[g.dataset.key] = Number(b.dataset.v);
+                opsi();
+                reset();
+              }),
+          ),
+        );
+      }
+      function reset() {
+        stop();
+        S = M[AK].build(INP);
+        I = 0;
+        draw();
+      }
+      function draw() {
+        const m = M[AK],
+          s = S[I],
+          last = S.length - 1;
+        E("stt").textContent = `Langkah ${I} dari ${last}`;
+        const t = TAG[s.tag] || TAG.mulai;
+        E("nr").innerHTML =
+          `<span class="tg" style="color:${t[1]};background:${t[2]};border-color:${t[3]}">${t[0]}</span>${s.d}`;
+        const kls = KLS[s.tag] || "";
+        const kode = `<div class="code">${m.kode
+          .map((ln, k) => {
+            const on = s.ln.indexOf(k + 1) >= 0;
+            const txt = esc(ln).replace(
+              /(\/\/.*)$/,
+              '<span class="cm">$1</span>',
+            );
+            return `<div class="cb ${on ? "on " + kls : ""}"><span class="n">${ln === "" ? "" : k + 1}</span><span class="t">${txt}</span></div>`;
+          })
+          .join("")}</div>`;
+        E("kol1").innerHTML = kode + (m.kiri ? m.kiri(s, INP) : "");
+        E("kol2").innerHTML = m.kanan ? m.kanan(s, INP) : "";
+        E("hasil").innerHTML = m.end ? m.end(s, INP) : "";
+        E("bp").disabled = I === 0;
+        E("bn").disabled = I === last;
+      }
+      function go(d) {
+        const l = S.length - 1;
+        I = Math.min(l, Math.max(0, I + d));
+        if (I === l) stop();
+        draw();
+      }
+      function stop() {
+        if (T) {
+          clearInterval(T);
+          T = null;
+        }
+        E("ba").textContent = "Putar";
+        E("ba").classList.remove("run");
+      }
+      E("bn").onclick = () => go(1);
+      E("bp").onclick = () => go(-1);
+      E("br").onclick = () => {
+        I = 0;
+        stop();
+        draw();
+      };
+      E("bs").onclick = () => {
+        stop();
+        I = S.length - 1;
+        draw();
+      };
+      E("ba").onclick = () => {
+        if (T) {
+          stop();
+          return;
+        }
+        if (I === S.length - 1) I = 0;
+        E("ba").textContent = "Jeda";
+        E("ba").classList.add("run");
+        T = setInterval(() => {
+          if (I >= S.length - 1) {
+            stop();
+            return;
+          }
+          I++;
+          draw();
+        }, 540);
+      };
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          go(1);
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          go(-1);
+        } else if (e.key === " ") {
+          e.preventDefault();
+          E("ba").click();
+        }
+      });
+      function test() {
+        const m = M[AK];
+        if (!m.tests) {
+          E("tc").innerHTML = "";
+          return;
+        }
+        let h =
+          '<table class="tc"><tr><th style="width:38%">Input</th><th style="width:26%">Output</th><th>Menguji</th></tr>';
+        m.tests.forEach((t) => {
+          h += `<tr><td class="io">${esc(t[0])}</td><td class="ou">${esc(t[1])}</td><td>${t[3] ? '<span class="tepi">tepi</span>' : ""}${t[2] || ""}</td></tr>`;
+        });
+        E("tc").innerHTML = h + "</table>";
+      }
+      function soal() {
+        const m = M[AK];
+        if (!m.soal) {
+          E("soal").innerHTML = "";
+          return;
+        }
+        const s = m.soal;
+        E("soal").innerHTML = `<div class="sl"><h4>${s.j}</h4><p>${s.i}</p>
+   <dl>${s.io.map((x) => `<dt>${x[0]}</dt><dd>${esc(x[1])}</dd>`).join("")}</dl>
+   ${s.c ? `<div class="ct"><b>Catatan.</b> ${s.c}</div>` : ""}</div>`;
+      }
+      pilih("paren");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.judul {
+  display: flex;
+  background-color: #112e81;
+  padding: 25px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.judul h2 {
+  font-size: clamp(20px, 4vw, 28px);
+  line-height: 1.3;
+}
+
+h2 {
+  margin: 0;
+}
+
+#section1 {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: #4647ae;
+  align-items: center;
+}
+
+.tabel-matkul {
+  width: 80%;
+  max-width: 800px;
+  min-width: 0;
+  overflow-x: auto;
+  margin-bottom: 20px;
+  margin-top: 40px;
+}
+
+.isi-tabel-matkul th {
+  text-align: center;
+  background-color: #112e81;
+  color: white;
+}
+
+.isi-tabel-matkul td {
+  text-align: left;
+  background-color: white;
+}
+
+.isi-tabel-matkul .tengah {
+  text-align: center;
+}
+
+.isi-tabel-matkul {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+.isi-tabel-matkul th,
+.isi-tabel-matkul td {
+  border: 1px solid #333;
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+
+.input-nilai {
+  width: 85px;
+  padding: 5px;
+  text-align: center;
+  font: inherit;
+}
+
+.isi-tabel-matkul td:last-child {
+  text-align: center;
+}
+
+.input-mhs {
+  background-color: #112e81;
+  color: #fff;
+  width: 80%;
+  max-width: 800px;
+  margin: 30px auto 40px;
+  padding: 30px 20px 40px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.form-pengantar {
+  margin: 0;
+  color: #aaccd6;
+  font-family: Georgia, serif;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.input-mhs h2 {
+  margin: 0 0 24px;
+  font-size: 28px;
+  font-weight: normal;
+}
+
+.baris-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  max-width: 300px;
+  margin: 0 auto 22px;
+}
+
+.baris-input input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #ddd;
+  border-radius: 24px;
+  padding: 10px 16px;
+  font: inherit;
+  font-size: 16px;
+}
+
+.input-mhs button {
+  border: 0;
+  border-radius: 24px;
+  padding: 10px 30px;
+  background-color: #4382df;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.input-mhs button:hover {
+  background-color: #aaccd6;
+}
+
+.input-nilai.input-error,
+.baris-input input.input-error {
+  border: 2px solid #c62828;
+  background-color: #ffe5e5;
+  color: #8b1010;
+}
+
+#pesan-error {
+  color: #ffd1d1;
+  line-height: 1.5;
+}
+
+#pesan-error:empty {
+  display: none;
+}
+
+#hasil {
+  margin-top: 24px;
+  padding: 12px;
+  background-color: #fff;
+  color: #112e81;
+  border-radius: 8px;
+}
+
+.input-nilai:focus-visible,
+.input-mhs input:focus-visible,
+.input-mhs button:focus-visible {
+  outline: 3px solid #aaccd6;
+  outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .judul {
+    padding: 20px 12px;
+  }
+
+  .tabel-matkul,
+  .input-mhs {
+    width: calc(100% - 24px);
+  }
+
+  .tabel-matkul {
+    margin-top: 24px;
+  }
+
+  .isi-tabel-matkul th,
+  .isi-tabel-matkul td {
+    padding: 10px 8px;
+  }
+
+  .input-mhs {
+    margin: 16px auto 24px;
+    padding: 24px 16px;
+  }
+
+  .input-mhs h2 {
+    font-size: 24px;
+  }
+}

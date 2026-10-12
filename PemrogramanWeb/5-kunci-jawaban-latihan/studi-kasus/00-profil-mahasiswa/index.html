@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Saya — Haikal Muzhoffar</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="situs-header">
+    <h1>Profil Saya</h1>
+    <nav aria-label="Navigasi utama">
+      <ul>
+        <li><a href="#tentang">Tentang</a></li>
+        <li><a href="#hobi">Hobi</a></li>
+        <li><a href="#matkul">Mata kuliah</a></li>
+        <li><a href="#jadwal">Jadwal</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="tentang" class="kartu identitas">
+      <img
+        src="https://picsum.photos/seed/profil-mhs/240/240"
+        alt="Foto potret mahasiswa Haikal Muzhoffar"
+        width="240"
+        height="240"
+      >
+      <div>
+        <h2>Haikal Muzhoffar</h2>
+        <p class="nim">NIM 231401089</p>
+        <p>
+          Mahasiswa Teknik Informatika yang sedang menempuh mata kuliah
+          Pemrograman Web. Tertarik pada antarmuka yang rapi, HTML semantik,
+          dan aplikasi Next.js yang bisa di-deploy.
+        </p>
+        <p>
+          Halaman ini dikerjakan dua tahap: struktur dulu (tanpa CSS), lalu
+          ditata dengan stylesheet eksternal.
+        </p>
+        <p>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
+          ·
+          <a href="#kontak">Hubungi saya</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="hobi">
+      <h2>Hobi</h2>
+      <ul class="daftar-chip">
+        <li>Membaca dokumentasi MDN</li>
+        <li>Menyusun catatan kuliah</li>
+        <li>Fotografi kampus</li>
+        <li>Ngopi sambil debug CSS</li>
+      </ul>
+    </section>
+
+    <section id="matkul">
+      <h2>Mata kuliah favorit</h2>
+      <ol>
+        <li>Pemrograman Web</li>
+        <li>Pemrograman Berorientasi Objek</li>
+        <li>Struktur Data</li>
+      </ol>
+    </section>
+
+    <section id="jadwal">
+      <h2>Jadwal minggu ini</h2>
+      <div class="tabel-bungkus">
+        <table>
+          <caption>Praktikum dan kuliah teori</caption>
+          <thead>
+            <tr>
+              <th scope="col">Hari</th>
+              <th scope="col">Mata kuliah</th>
+              <th scope="col">Jam</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Senin</td>
+              <td>Pemrograman Web</td>
+              <td>08.00–10.30</td>
+            </tr>
+            <tr>
+              <td>Rabu</td>
+              <td>PBO</td>
+              <td>13.00–15.30</td>
+            </tr>
+            <tr>
+              <td>Jumat</td>
+              <td>Struktur Data</td>
+              <td>10.00–12.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="kontak">
+      <h2>Kontak</h2>
+      <form action="#" method="post">
+        <p>
+          <label for="nama">Nama</label>
+          <input id="nama" name="nama" type="text" required autocomplete="name">
+        </p>
+        <p>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+        </p>
+        <p>
+          <label for="pesan">Pesan</label>
+          <textarea id="pesan" name="pesan" rows="4" required></textarea>
+        </p>
+        <button type="submit">Kirim pesan</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Haikal Muzhoffar · Studi kasus 00 Pemrograman Web</p>
+  </footer>
+</body>
+</html>
